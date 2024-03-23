@@ -1,0 +1,4740 @@
+{
+  "elements": {
+    "customer": {
+      "color": "secondary",
+      "shape": "person",
+      "description": "Owner of blog, post and manage his blogs on app.",
+      "technology": null,
+      "tags": null,
+      "links": null,
+      "id": "customer",
+      "kind": "person",
+      "title": "Blog Owner"
+    },
+    "blogsystem": {
+      "description": null,
+      "technology": null,
+      "tags": null,
+      "links": null,
+      "id": "blogsystem",
+      "kind": "enterprise",
+      "title": "Blog System"
+    },
+    "blogsystem.email": {
+      "description": "The internal Microsoft Exchange e-mail system.",
+      "technology": null,
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.email",
+      "kind": "softwaresystem",
+      "title": "E-mail System",
+      "color": "muted"
+    },
+    "blogsystem.blogserver": {
+      "description": "Central orchestrator for handle user's blog actions",
+      "technology": null,
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver",
+      "kind": "softwaresystem",
+      "title": "Blog System Server"
+    },
+    "blogsystem.blogserver.singlePageApplication": {
+      "description": "Provides all of the UIs of blog functionality to customers via their web browser.",
+      "technology": "JavaScript and ReactJS",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.singlePageApplication",
+      "kind": "container",
+      "title": "Single-Page Application",
+      "shape": "browser"
+    },
+    "blogsystem.blogserver.webApplication": {
+      "description": "Delivers the static content and the Blog single page application.",
+      "technology": "Java and Spring MVC",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.webApplication",
+      "kind": "container",
+      "title": "Web Application"
+    },
+    "blogsystem.blogserver.apiApplication": {
+      "description": "Provides blog functionality via a JSON/HTTPS API.",
+      "technology": "Java and Spring MVC",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.apiApplication",
+      "kind": "container",
+      "title": "API Application"
+    },
+    "blogsystem.blogserver.database": {
+      "shape": "storage",
+      "description": "Stores user registration information, hashed authentication credentials, access logs, etc.",
+      "technology": "Oracle Database Schema",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.database",
+      "kind": "database",
+      "title": "Database"
+    },
+    "blogsystem.blogserver.apiApplication.signinController": {
+      "description": "Allows users to sign in to the Blog System.",
+      "technology": "Spring MVC Rest Controller",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.apiApplication.signinController",
+      "kind": "component",
+      "title": "Sign In Controller"
+    },
+    "blogsystem.blogserver.apiApplication.postController": {
+      "description": "Provides customers all information about blogs.",
+      "technology": "Spring MVC Rest Controller",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.apiApplication.postController",
+      "kind": "component",
+      "title": "Post Controller"
+    },
+    "blogsystem.blogserver.apiApplication.resetPasswordController": {
+      "description": "Allows users to reset their passwords with a single use URL.",
+      "technology": "Spring MVC Rest Controller",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.apiApplication.resetPasswordController",
+      "kind": "component",
+      "title": "Reset Password Controller"
+    },
+    "blogsystem.blogserver.apiApplication.securityComponent": {
+      "description": "Provides functionality related to signing in, changing passwords, etc.",
+      "technology": "Spring Bean",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.apiApplication.securityComponent",
+      "kind": "component",
+      "title": "Security Component"
+    },
+    "blogsystem.blogserver.apiApplication.emailComponent": {
+      "description": "Sends e-mails to users.",
+      "technology": "Spring Bean",
+      "tags": null,
+      "links": null,
+      "id": "blogsystem.blogserver.apiApplication.emailComponent",
+      "kind": "component",
+      "title": "E-mail Component"
+    }
+  },
+  "relations": {
+    "e5e622c758767f4387239d8f684a6bd17f7e1361": {
+      "source": "customer",
+      "target": "blogsystem.blogserver",
+      "id": "e5e622c758767f4387239d8f684a6bd17f7e1361",
+      "title": "Views account balances, and makes payments using"
+    },
+    "3168b0b29132fd89e215f93e561e629310126a70": {
+      "source": "blogsystem.blogserver",
+      "target": "blogsystem.email",
+      "id": "3168b0b29132fd89e215f93e561e629310126a70",
+      "title": "Sends e-mail using"
+    },
+    "4d1d3696a85887ce5ac01af825b15ea5f7ed0bbd": {
+      "source": "blogsystem.email",
+      "target": "customer",
+      "id": "4d1d3696a85887ce5ac01af825b15ea5f7ed0bbd",
+      "title": "Sends e-mails to"
+    },
+    "78630d23f9aeccf43e42174fdf5e15eca7a45bd2": {
+      "source": "customer",
+      "target": "blogsystem.blogserver.webApplication",
+      "id": "78630d23f9aeccf43e42174fdf5e15eca7a45bd2",
+      "title": "Visits blogsystem.com using HTTPS"
+    },
+    "eb7c30d2ff9d533b1f5b7d82b273a62a8c7755e8": {
+      "source": "customer",
+      "target": "blogsystem.blogserver.singlePageApplication",
+      "id": "eb7c30d2ff9d533b1f5b7d82b273a62a8c7755e8",
+      "title": "Views account and blogs"
+    },
+    "b4f3dc430e6a23ae31f0dc2fb7e41257651e04ba": {
+      "source": "blogsystem.blogserver.webApplication",
+      "target": "blogsystem.blogserver.singlePageApplication",
+      "id": "b4f3dc430e6a23ae31f0dc2fb7e41257651e04ba",
+      "title": "Delivers to the customer's web browser"
+    },
+    "e0dc247a6dffca7848778f48af8d2ab447fd1507": {
+      "source": "blogsystem.blogserver.singlePageApplication",
+      "target": "blogsystem.blogserver.apiApplication.signinController",
+      "id": "e0dc247a6dffca7848778f48af8d2ab447fd1507",
+      "title": "Makes API calls to"
+    },
+    "2d28b5bf083a048b233873eb8b863f9576205943": {
+      "source": "blogsystem.blogserver.singlePageApplication",
+      "target": "blogsystem.blogserver.apiApplication.postController",
+      "id": "2d28b5bf083a048b233873eb8b863f9576205943",
+      "title": "Makes API calls to"
+    },
+    "02e0e9656b2b18eab503fe0d4c411b22de6ec086": {
+      "source": "blogsystem.blogserver.singlePageApplication",
+      "target": "blogsystem.blogserver.apiApplication.resetPasswordController",
+      "id": "02e0e9656b2b18eab503fe0d4c411b22de6ec086",
+      "title": "Makes API calls to"
+    },
+    "db6acbb7832e5b991b7d0af1f0a083b8e0adc428": {
+      "source": "blogsystem.blogserver.apiApplication.signinController",
+      "target": "blogsystem.blogserver.apiApplication.securityComponent",
+      "id": "db6acbb7832e5b991b7d0af1f0a083b8e0adc428",
+      "title": "Uses"
+    },
+    "e0cb6b4e13545ec2843baf84bdf704e61669ea4f": {
+      "source": "blogsystem.blogserver.apiApplication.resetPasswordController",
+      "target": "blogsystem.blogserver.apiApplication.securityComponent",
+      "id": "e0cb6b4e13545ec2843baf84bdf704e61669ea4f",
+      "title": "Uses"
+    },
+    "098e4db0fceeac87ee22f633a7e272153756e5b7": {
+      "source": "blogsystem.blogserver.apiApplication.resetPasswordController",
+      "target": "blogsystem.blogserver.apiApplication.emailComponent",
+      "id": "098e4db0fceeac87ee22f633a7e272153756e5b7",
+      "title": "Uses"
+    },
+    "2579e5bd7a2059d962bddcd5e3edcc70981c10d2": {
+      "source": "blogsystem.blogserver.apiApplication.securityComponent",
+      "target": "blogsystem.blogserver.database",
+      "id": "2579e5bd7a2059d962bddcd5e3edcc70981c10d2",
+      "title": "Reads from and writes to"
+    },
+    "2ba424408ddc03d9f0adfe365450989d390c75a3": {
+      "source": "blogsystem.blogserver.apiApplication.emailComponent",
+      "target": "blogsystem.email",
+      "id": "2ba424408ddc03d9f0adfe365450989d390c75a3",
+      "title": "Sends e-mail using"
+    }
+  },
+  "views": [
+    {
+      "id": "index",
+      "viewOf": "blogsystem",
+      "title": "Blog System - Landscape",
+      "description": null,
+      "tags": null,
+      "links": null,
+      "docUri": "file:///d%3A/gen-c4/uploads/1/src/blog.c4",
+      "relativePath": "",
+      "autoLayout": "TB",
+      "width": 964,
+      "height": 581,
+      "nodes": [
+        {
+          "description": null,
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "enterprise",
+          "title": "Blog System",
+          "id": "blogsystem",
+          "parent": null,
+          "level": 0,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [
+            "blogsystem.email",
+            "blogsystem.blogserver"
+          ],
+          "inEdges": [
+            "customer:blogsystem.blogserver"
+          ],
+          "outEdges": [
+            "blogsystem.email:customer"
+          ],
+          "depth": 1,
+          "navigateTo": "context",
+          "position": [
+            8,
+            8
+          ],
+          "size": {
+            "width": 948,
+            "height": 284
+          },
+          "labels": [
+            {
+              "fontSize": 13,
+              "fontStyle": "bold",
+              "color": "#bfdbfeb3",
+              "text": "BLOG SYSTEM",
+              "pt": [
+                8,
+                15
+              ],
+              "align": "left",
+              "width": 95
+            }
+          ]
+        },
+        {
+          "description": "The internal Microsoft Exchange e-mail system.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "E-mail System",
+          "id": "blogsystem.email",
+          "parent": "blogsystem",
+          "level": 1,
+          "color": "muted",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver:blogsystem.email"
+          ],
+          "outEdges": [
+            "blogsystem.email:customer"
+          ],
+          "position": [
+            47,
+            72
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f8fafc",
+              "text": "E-mail System",
+              "pt": [
+                97,
+                77
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "The internal Microsoft Exchange e-mail",
+              "pt": [
+                40,
+                101
+              ],
+              "align": "left",
+              "width": 243
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "system.",
+              "pt": [
+                137,
+                118
+              ],
+              "align": "left",
+              "width": 49
+            }
+          ]
+        },
+        {
+          "description": "Central orchestrator for handle user's blog actions",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "Blog System Server",
+          "id": "blogsystem.blogserver",
+          "parent": "blogsystem",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "customer:blogsystem.blogserver"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver:blogsystem.email"
+          ],
+          "navigateTo": "ibsContainers",
+          "position": [
+            592,
+            72
+          ],
+          "size": {
+            "width": 324,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Blog System Server",
+              "pt": [
+                74,
+                77
+              ],
+              "align": "left",
+              "width": 177
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Central orchestrator for handle user's blog",
+              "pt": [
+                32,
+                101
+              ],
+              "align": "left",
+              "width": 262
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "actions",
+              "pt": [
+                140,
+                118
+              ],
+              "align": "left",
+              "width": 45
+            }
+          ]
+        },
+        {
+          "description": "Owner of blog, post and manage his blogs on app.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "person",
+          "title": "Blog Owner",
+          "id": "customer",
+          "parent": null,
+          "level": 0,
+          "color": "secondary",
+          "shape": "person",
+          "children": [],
+          "inEdges": [
+            "blogsystem.email:customer"
+          ],
+          "outEdges": [
+            "customer:blogsystem.blogserver"
+          ],
+          "navigateTo": "customer",
+          "position": [
+            309,
+            401
+          ],
+          "size": {
+            "width": 344,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f0f9ff",
+              "text": "Blog Owner",
+              "pt": [
+                120,
+                77
+              ],
+              "align": "left",
+              "width": 105
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "Owner of blog, post and manage his blogs on",
+              "pt": [
+                32,
+                101
+              ],
+              "align": "left",
+              "width": 282
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "app.",
+              "pt": [
+                159,
+                118
+              ],
+              "align": "left",
+              "width": 28
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "blogsystem.blogserver:blogsystem.email",
+          "parent": "blogsystem",
+          "source": "blogsystem.blogserver",
+          "target": "blogsystem.email",
+          "label": "Sends e-mail using",
+          "relations": [
+            "3168b0b29132fd89e215f93e561e629310126a70",
+            "2ba424408ddc03d9f0adfe365450989d390c75a3"
+          ],
+          "points": [
+            [
+              593,
+              162
+            ],
+            [
+              527,
+              162
+            ],
+            [
+              449,
+              162
+            ],
+            [
+              381,
+              162
+            ]
+          ],
+          "headArrowPoint": [
+            368,
+            162
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mail using",
+              "pt": [
+                428,
+                151
+              ],
+              "align": "left",
+              "width": 111
+            }
+          ],
+          "labelBBox": {
+            "x": 424,
+            "y": 134,
+            "width": 119,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              381,
+              166
+            ],
+            [
+              371,
+              162
+            ],
+            [
+              381,
+              159
+            ]
+          ]
+        },
+        {
+          "id": "customer:blogsystem.blogserver",
+          "parent": null,
+          "source": "customer",
+          "target": "blogsystem.blogserver",
+          "label": "Views account balances, and makes payments using",
+          "relations": [
+            "e5e622c758767f4387239d8f684a6bd17f7e1361",
+            "78630d23f9aeccf43e42174fdf5e15eca7a45bd2",
+            "eb7c30d2ff9d533b1f5b7d82b273a62a8c7755e8"
+          ],
+          "points": [
+            [
+              556,
+              401
+            ],
+            [
+              592,
+              358
+            ],
+            [
+              635,
+              306
+            ],
+            [
+              672,
+              262
+            ]
+          ],
+          "headArrowPoint": [
+            680,
+            252
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Views account balances, and makes",
+              "pt": [
+                643,
+                323
+              ],
+              "align": "left",
+              "width": 211
+            },
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "payments using",
+              "pt": [
+                643,
+                338
+              ],
+              "align": "left",
+              "width": 92
+            }
+          ],
+          "labelBBox": {
+            "x": 639,
+            "y": 306,
+            "width": 219,
+            "height": 36
+          },
+          "headArrow": [
+            [
+              669,
+              260
+            ],
+            [
+              678,
+              254
+            ],
+            [
+              675,
+              264
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.email:customer",
+          "parent": null,
+          "source": "blogsystem.email",
+          "target": "customer",
+          "label": "Sends e-mails to",
+          "relations": [
+            "4d1d3696a85887ce5ac01af825b15ea5f7ed0bbd"
+          ],
+          "points": [
+            [
+              283,
+              252
+            ],
+            [
+              319,
+              295
+            ],
+            [
+              362,
+              347
+            ],
+            [
+              399,
+              391
+            ]
+          ],
+          "headArrowPoint": [
+            407,
+            401
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mails to",
+              "pt": [
+                370,
+                331
+              ],
+              "align": "left",
+              "width": 97
+            }
+          ],
+          "labelBBox": {
+            "x": 366,
+            "y": 314,
+            "width": 105,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              402,
+              389
+            ],
+            [
+              405,
+              399
+            ],
+            [
+              396,
+              394
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "context",
+      "viewOf": "blogsystem",
+      "title": "Blog Server - SystemContext",
+      "description": null,
+      "tags": null,
+      "links": null,
+      "docUri": "file:///d%3A/gen-c4/uploads/1/src/blog.c4",
+      "relativePath": "",
+      "autoLayout": "TB",
+      "width": 964,
+      "height": 581,
+      "nodes": [
+        {
+          "description": null,
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "enterprise",
+          "title": "Blog System",
+          "id": "blogsystem",
+          "parent": null,
+          "level": 0,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [
+            "blogsystem.blogserver",
+            "blogsystem.email"
+          ],
+          "inEdges": [
+            "customer:blogsystem.blogserver"
+          ],
+          "outEdges": [
+            "blogsystem.email:customer"
+          ],
+          "depth": 1,
+          "navigateTo": "index",
+          "position": [
+            8,
+            8
+          ],
+          "size": {
+            "width": 948,
+            "height": 284
+          },
+          "labels": [
+            {
+              "fontSize": 13,
+              "fontStyle": "bold",
+              "color": "#bfdbfeb3",
+              "text": "BLOG SYSTEM",
+              "pt": [
+                8,
+                15
+              ],
+              "align": "left",
+              "width": 95
+            }
+          ]
+        },
+        {
+          "description": "Central orchestrator for handle user's blog actions",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "Blog System Server",
+          "id": "blogsystem.blogserver",
+          "parent": "blogsystem",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "customer:blogsystem.blogserver"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver:blogsystem.email"
+          ],
+          "navigateTo": "ibsContainers",
+          "position": [
+            592,
+            72
+          ],
+          "size": {
+            "width": 324,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Blog System Server",
+              "pt": [
+                74,
+                77
+              ],
+              "align": "left",
+              "width": 177
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Central orchestrator for handle user's blog",
+              "pt": [
+                32,
+                101
+              ],
+              "align": "left",
+              "width": 262
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "actions",
+              "pt": [
+                140,
+                118
+              ],
+              "align": "left",
+              "width": 45
+            }
+          ]
+        },
+        {
+          "description": "The internal Microsoft Exchange e-mail system.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "E-mail System",
+          "id": "blogsystem.email",
+          "parent": "blogsystem",
+          "level": 1,
+          "color": "secondary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver:blogsystem.email"
+          ],
+          "outEdges": [
+            "blogsystem.email:customer"
+          ],
+          "position": [
+            47,
+            72
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f0f9ff",
+              "text": "E-mail System",
+              "pt": [
+                97,
+                77
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "The internal Microsoft Exchange e-mail",
+              "pt": [
+                40,
+                101
+              ],
+              "align": "left",
+              "width": 243
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "system.",
+              "pt": [
+                137,
+                118
+              ],
+              "align": "left",
+              "width": 49
+            }
+          ]
+        },
+        {
+          "description": "Owner of blog, post and manage his blogs on app.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "person",
+          "title": "Blog Owner",
+          "id": "customer",
+          "parent": null,
+          "level": 0,
+          "color": "secondary",
+          "shape": "person",
+          "children": [],
+          "inEdges": [
+            "blogsystem.email:customer"
+          ],
+          "outEdges": [
+            "customer:blogsystem.blogserver"
+          ],
+          "navigateTo": "customer",
+          "position": [
+            309,
+            401
+          ],
+          "size": {
+            "width": 344,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f0f9ff",
+              "text": "Blog Owner",
+              "pt": [
+                120,
+                77
+              ],
+              "align": "left",
+              "width": 105
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "Owner of blog, post and manage his blogs on",
+              "pt": [
+                32,
+                101
+              ],
+              "align": "left",
+              "width": 282
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "app.",
+              "pt": [
+                159,
+                118
+              ],
+              "align": "left",
+              "width": 28
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "blogsystem.blogserver:blogsystem.email",
+          "parent": "blogsystem",
+          "source": "blogsystem.blogserver",
+          "target": "blogsystem.email",
+          "label": "Sends e-mail using",
+          "relations": [
+            "3168b0b29132fd89e215f93e561e629310126a70",
+            "2ba424408ddc03d9f0adfe365450989d390c75a3"
+          ],
+          "points": [
+            [
+              593,
+              162
+            ],
+            [
+              527,
+              162
+            ],
+            [
+              449,
+              162
+            ],
+            [
+              381,
+              162
+            ]
+          ],
+          "headArrowPoint": [
+            368,
+            162
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mail using",
+              "pt": [
+                428,
+                151
+              ],
+              "align": "left",
+              "width": 111
+            }
+          ],
+          "labelBBox": {
+            "x": 424,
+            "y": 134,
+            "width": 119,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              381,
+              166
+            ],
+            [
+              371,
+              162
+            ],
+            [
+              381,
+              159
+            ]
+          ]
+        },
+        {
+          "id": "customer:blogsystem.blogserver",
+          "parent": null,
+          "source": "customer",
+          "target": "blogsystem.blogserver",
+          "label": "Views account balances, and makes payments using",
+          "relations": [
+            "e5e622c758767f4387239d8f684a6bd17f7e1361",
+            "78630d23f9aeccf43e42174fdf5e15eca7a45bd2",
+            "eb7c30d2ff9d533b1f5b7d82b273a62a8c7755e8"
+          ],
+          "points": [
+            [
+              556,
+              401
+            ],
+            [
+              592,
+              358
+            ],
+            [
+              635,
+              306
+            ],
+            [
+              672,
+              262
+            ]
+          ],
+          "headArrowPoint": [
+            680,
+            252
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Views account balances, and makes",
+              "pt": [
+                643,
+                323
+              ],
+              "align": "left",
+              "width": 211
+            },
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "payments using",
+              "pt": [
+                643,
+                338
+              ],
+              "align": "left",
+              "width": 92
+            }
+          ],
+          "labelBBox": {
+            "x": 639,
+            "y": 306,
+            "width": 219,
+            "height": 36
+          },
+          "headArrow": [
+            [
+              669,
+              260
+            ],
+            [
+              678,
+              254
+            ],
+            [
+              675,
+              264
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.email:customer",
+          "parent": null,
+          "source": "blogsystem.email",
+          "target": "customer",
+          "label": "Sends e-mails to",
+          "relations": [
+            "4d1d3696a85887ce5ac01af825b15ea5f7ed0bbd"
+          ],
+          "points": [
+            [
+              283,
+              252
+            ],
+            [
+              319,
+              295
+            ],
+            [
+              362,
+              347
+            ],
+            [
+              399,
+              391
+            ]
+          ],
+          "headArrowPoint": [
+            407,
+            401
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mails to",
+              "pt": [
+                370,
+                331
+              ],
+              "align": "left",
+              "width": 97
+            }
+          ],
+          "labelBBox": {
+            "x": 366,
+            "y": 314,
+            "width": 105,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              402,
+              389
+            ],
+            [
+              405,
+              399
+            ],
+            [
+              396,
+              394
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ibsContainers",
+      "viewOf": "blogsystem.blogserver",
+      "title": "Blog System - Containers",
+      "description": null,
+      "tags": null,
+      "links": null,
+      "docUri": "file:///d%3A/gen-c4/uploads/1/src/blog.c4",
+      "relativePath": "",
+      "autoLayout": "TB",
+      "width": 965,
+      "height": 1545,
+      "nodes": [
+        {
+          "description": "Central orchestrator for handle user's blog actions",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "Blog System Server",
+          "id": "blogsystem.blogserver",
+          "parent": null,
+          "level": 0,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [
+            "blogsystem.blogserver.webApplication",
+            "blogsystem.blogserver.singlePageApplication",
+            "blogsystem.blogserver.apiApplication",
+            "blogsystem.blogserver.database"
+          ],
+          "inEdges": [
+            "customer:blogsystem.blogserver.webApplication",
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.apiApplication:blogsystem.email"
+          ],
+          "depth": 1,
+          "position": [
+            8,
+            267
+          ],
+          "size": {
+            "width": 431,
+            "height": 1270
+          },
+          "labels": [
+            {
+              "fontSize": 13,
+              "fontStyle": "bold",
+              "color": "#bfdbfeb3",
+              "text": "BLOG SYSTEM SERVER",
+              "pt": [
+                8,
+                15
+              ],
+              "align": "left",
+              "width": 152
+            }
+          ]
+        },
+        {
+          "description": "Delivers the static content and the Blog single page application.",
+          "technology": "Java and Spring MVC",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "Web Application",
+          "id": "blogsystem.blogserver.webApplication",
+          "parent": "blogsystem.blogserver",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "customer:blogsystem.blogserver.webApplication"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication"
+          ],
+          "navigateTo": "webapp",
+          "position": [
+            47,
+            331
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Web Application",
+              "pt": [
+                89,
+                67
+              ],
+              "align": "left",
+              "width": 145
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Java and Spring MVC",
+              "pt": [
+                103,
+                89
+              ],
+              "align": "left",
+              "width": 117
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Delivers the static content and the Blog",
+              "pt": [
+                40,
+                110
+              ],
+              "align": "left",
+              "width": 243
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "single page application.",
+              "pt": [
+                88,
+                127
+              ],
+              "align": "left",
+              "width": 147
+            }
+          ]
+        },
+        {
+          "description": "Provides all of the UIs of blog functionality to customers via their web browser.",
+          "technology": "JavaScript and ReactJS",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "Single-Page Application",
+          "id": "blogsystem.blogserver.singlePageApplication",
+          "parent": "blogsystem.blogserver",
+          "level": 1,
+          "color": "primary",
+          "shape": "browser",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication",
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication"
+          ],
+          "navigateTo": "spa",
+          "position": [
+            61,
+            660
+          ],
+          "size": {
+            "width": 323,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Single-Page Application",
+              "pt": [
+                56,
+                67
+              ],
+              "align": "left",
+              "width": 213
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "JavaScript and ReactJS",
+              "pt": [
+                98,
+                89
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Provides all of the UIs of blog functionality",
+              "pt": [
+                33,
+                110
+              ],
+              "align": "left",
+              "width": 260
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "to customers via their web browser.",
+              "pt": [
+                52,
+                127
+              ],
+              "align": "left",
+              "width": 221
+            }
+          ]
+        },
+        {
+          "description": "Provides blog functionality via a JSON/HTTPS API.",
+          "technology": "Java and Spring MVC",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "API Application",
+          "id": "blogsystem.blogserver.apiApplication",
+          "parent": "blogsystem.blogserver",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.apiApplication:blogsystem.blogserver.database",
+            "blogsystem.blogserver.apiApplication:blogsystem.email"
+          ],
+          "navigateTo": "apiApp",
+          "position": [
+            48,
+            973
+          ],
+          "size": {
+            "width": 350,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "API Application",
+              "pt": [
+                108,
+                68
+              ],
+              "align": "left",
+              "width": 136
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Java and Spring MVC",
+              "pt": [
+                117,
+                90
+              ],
+              "align": "left",
+              "width": 117
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Provides blog functionality via a JSON/HTTPS",
+              "pt": [
+                32,
+                111
+              ],
+              "align": "left",
+              "width": 288
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "API.",
+              "pt": [
+                162,
+                128
+              ],
+              "align": "left",
+              "width": 27
+            }
+          ]
+        },
+        {
+          "description": "Stores user registration information, hashed authentication credentials, access logs, etc.",
+          "technology": "Oracle Database Schema",
+          "tags": null,
+          "links": null,
+          "kind": "database",
+          "title": "Database",
+          "id": "blogsystem.blogserver.database",
+          "parent": "blogsystem.blogserver",
+          "level": 1,
+          "color": "primary",
+          "shape": "storage",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.apiApplication:blogsystem.blogserver.database"
+          ],
+          "outEdges": [],
+          "position": [
+            56,
+            1286
+          ],
+          "size": {
+            "width": 334,
+            "height": 211
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Database",
+              "pt": [
+                125,
+                84
+              ],
+              "align": "left",
+              "width": 86
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Oracle Database Schema",
+              "pt": [
+                99,
+                106
+              ],
+              "align": "left",
+              "width": 138
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Stores user registration information, hashed",
+              "pt": [
+                32,
+                127
+              ],
+              "align": "left",
+              "width": 272
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "authentication credentials, access logs, etc.",
+              "pt": [
+                32,
+                144
+              ],
+              "align": "left",
+              "width": 271
+            }
+          ]
+        },
+        {
+          "description": "Owner of blog, post and manage his blogs on app.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "person",
+          "title": "Blog Owner",
+          "id": "customer",
+          "parent": null,
+          "level": 0,
+          "color": "secondary",
+          "shape": "person",
+          "children": [],
+          "inEdges": [
+            "blogsystem.email:customer"
+          ],
+          "outEdges": [
+            "customer:blogsystem.blogserver.webApplication",
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "navigateTo": "customer",
+          "position": [
+            216,
+            0
+          ],
+          "size": {
+            "width": 344,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f0f9ff",
+              "text": "Blog Owner",
+              "pt": [
+                120,
+                78
+              ],
+              "align": "left",
+              "width": 105
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "Owner of blog, post and manage his blogs on",
+              "pt": [
+                32,
+                101
+              ],
+              "align": "left",
+              "width": 282
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "app.",
+              "pt": [
+                159,
+                118
+              ],
+              "align": "left",
+              "width": 28
+            }
+          ]
+        },
+        {
+          "description": "The internal Microsoft Exchange e-mail system.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "E-mail System",
+          "id": "blogsystem.email",
+          "parent": null,
+          "level": 0,
+          "color": "muted",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.apiApplication:blogsystem.email"
+          ],
+          "outEdges": [
+            "blogsystem.email:customer"
+          ],
+          "position": [
+            489,
+            1302
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f8fafc",
+              "text": "E-mail System",
+              "pt": [
+                97,
+                78
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "The internal Microsoft Exchange e-mail",
+              "pt": [
+                40,
+                101
+              ],
+              "align": "left",
+              "width": 243
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "system.",
+              "pt": [
+                137,
+                118
+              ],
+              "align": "left",
+              "width": 49
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication",
+          "parent": "blogsystem.blogserver",
+          "source": "blogsystem.blogserver.webApplication",
+          "target": "blogsystem.blogserver.singlePageApplication",
+          "label": "Delivers to the customer's web browser",
+          "relations": [
+            "b4f3dc430e6a23ae31f0dc2fb7e41257651e04ba"
+          ],
+          "points": [
+            [
+              213,
+              511
+            ],
+            [
+              215,
+              553
+            ],
+            [
+              217,
+              603
+            ],
+            [
+              219,
+              647
+            ]
+          ],
+          "headArrowPoint": [
+            219,
+            660
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Delivers to the customer's web",
+              "pt": [
+                226,
+                581
+              ],
+              "align": "left",
+              "width": 177
+            },
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "browser",
+              "pt": [
+                226,
+                597
+              ],
+              "align": "left",
+              "width": 47
+            }
+          ],
+          "labelBBox": {
+            "x": 222,
+            "y": 564,
+            "width": 185,
+            "height": 37
+          },
+          "headArrow": [
+            [
+              222,
+              647
+            ],
+            [
+              219,
+              657
+            ],
+            [
+              215,
+              647
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication",
+          "parent": "blogsystem.blogserver",
+          "source": "blogsystem.blogserver.singlePageApplication",
+          "target": "blogsystem.blogserver.apiApplication",
+          "label": "Makes API calls to",
+          "relations": [
+            "e0dc247a6dffca7848778f48af8d2ab447fd1507",
+            "2d28b5bf083a048b233873eb8b863f9576205943",
+            "02e0e9656b2b18eab503fe0d4c411b22de6ec086"
+          ],
+          "points": [
+            [
+              223,
+              840
+            ],
+            [
+              223,
+              877
+            ],
+            [
+              223,
+              922
+            ],
+            [
+              223,
+              960
+            ]
+          ],
+          "headArrowPoint": [
+            223,
+            974
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Makes API calls to",
+              "pt": [
+                233,
+                911
+              ],
+              "align": "left",
+              "width": 107
+            }
+          ],
+          "labelBBox": {
+            "x": 229,
+            "y": 894,
+            "width": 115,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              227,
+              960
+            ],
+            [
+              223,
+              970
+            ],
+            [
+              220,
+              960
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.apiApplication:blogsystem.blogserver.database",
+          "parent": "blogsystem.blogserver",
+          "source": "blogsystem.blogserver.apiApplication",
+          "target": "blogsystem.blogserver.database",
+          "label": "Reads from and writes to",
+          "relations": [
+            "2579e5bd7a2059d962bddcd5e3edcc70981c10d2"
+          ],
+          "points": [
+            [
+              223,
+              1153
+            ],
+            [
+              223,
+              1190
+            ],
+            [
+              223,
+              1234
+            ],
+            [
+              223,
+              1273
+            ]
+          ],
+          "headArrowPoint": [
+            223,
+            1286
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Reads from and writes to",
+              "pt": [
+                233,
+                1224
+              ],
+              "align": "left",
+              "width": 145
+            }
+          ],
+          "labelBBox": {
+            "x": 229,
+            "y": 1207,
+            "width": 153,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              227,
+              1273
+            ],
+            [
+              223,
+              1283
+            ],
+            [
+              220,
+              1273
+            ]
+          ]
+        },
+        {
+          "id": "customer:blogsystem.blogserver.webApplication",
+          "parent": null,
+          "source": "customer",
+          "target": "blogsystem.blogserver.webApplication",
+          "label": "Visits blogsystem.com using HTTPS",
+          "relations": [
+            "78630d23f9aeccf43e42174fdf5e15eca7a45bd2"
+          ],
+          "points": [
+            [
+              306,
+              180
+            ],
+            [
+              293,
+              198
+            ],
+            [
+              279,
+              217
+            ],
+            [
+              269,
+              235
+            ],
+            [
+              255,
+              261
+            ],
+            [
+              243,
+              291
+            ],
+            [
+              234,
+              319
+            ]
+          ],
+          "headArrowPoint": [
+            230,
+            331
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Visits blogsystem.com using HTTPS",
+              "pt": [
+                278,
+                251
+              ],
+              "align": "left",
+              "width": 210
+            }
+          ],
+          "labelBBox": {
+            "x": 274,
+            "y": 234,
+            "width": 218,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              237,
+              320
+            ],
+            [
+              231,
+              328
+            ],
+            [
+              231,
+              318
+            ]
+          ]
+        },
+        {
+          "id": "customer:blogsystem.blogserver.singlePageApplication",
+          "parent": null,
+          "source": "customer",
+          "target": "blogsystem.blogserver.singlePageApplication",
+          "label": "Views account and blogs",
+          "relations": [
+            "eb7c30d2ff9d533b1f5b7d82b273a62a8c7755e8"
+          ],
+          "points": [
+            [
+              482,
+              180
+            ],
+            [
+              495,
+              197
+            ],
+            [
+              506,
+              216
+            ],
+            [
+              513,
+              235
+            ],
+            [
+              534,
+              290
+            ],
+            [
+              684,
+              237
+            ],
+            [
+              432,
+              605
+            ],
+            [
+              421,
+              622
+            ],
+            [
+              406,
+              638
+            ],
+            [
+              391,
+              652
+            ]
+          ],
+          "headArrowPoint": [
+            381,
+            660
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Views account and blogs",
+              "pt": [
+                585,
+                425
+              ],
+              "align": "left",
+              "width": 144
+            }
+          ],
+          "labelBBox": {
+            "x": 581,
+            "y": 408,
+            "width": 152,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              393,
+              654
+            ],
+            [
+              383,
+              658
+            ],
+            [
+              389,
+              649
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.email:customer",
+          "parent": null,
+          "source": "blogsystem.email",
+          "target": "customer",
+          "label": "Sends e-mails to",
+          "relations": [
+            "4d1d3696a85887ce5ac01af825b15ea5f7ed0bbd"
+          ],
+          "points": [
+            [
+              693,
+              1303
+            ],
+            [
+              783,
+              1101
+            ],
+            [
+              969,
+              599
+            ],
+            [
+              758,
+              267
+            ],
+            [
+              717,
+              201
+            ],
+            [
+              643,
+              160
+            ],
+            [
+              573,
+              134
+            ]
+          ],
+          "headArrowPoint": [
+            560,
+            129
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mails to",
+              "pt": [
+                864,
+                754
+              ],
+              "align": "left",
+              "width": 97
+            }
+          ],
+          "labelBBox": {
+            "x": 860,
+            "y": 737,
+            "width": 105,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              571,
+              137
+            ],
+            [
+              563,
+              130
+            ],
+            [
+              574,
+              130
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.apiApplication:blogsystem.email",
+          "parent": null,
+          "source": "blogsystem.blogserver.apiApplication",
+          "target": "blogsystem.email",
+          "label": "Sends e-mail using",
+          "relations": [
+            "2ba424408ddc03d9f0adfe365450989d390c75a3"
+          ],
+          "points": [
+            [
+              340,
+              1153
+            ],
+            [
+              397,
+              1197
+            ],
+            [
+              466,
+              1250
+            ],
+            [
+              524,
+              1295
+            ]
+          ],
+          "headArrowPoint": [
+            534,
+            1302
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mail using",
+              "pt": [
+                446,
+                1224
+              ],
+              "align": "left",
+              "width": 111
+            }
+          ],
+          "labelBBox": {
+            "x": 442,
+            "y": 1207,
+            "width": 119,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              526,
+              1292
+            ],
+            [
+              532,
+              1301
+            ],
+            [
+              522,
+              1297
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "customer",
+      "viewOf": "customer",
+      "title": "Blog Owner",
+      "description": null,
+      "tags": null,
+      "links": null,
+      "docUri": "file:///d%3A/gen-c4/uploads/1/src/blog.c4",
+      "relativePath": "",
+      "autoLayout": "TB",
+      "width": 482,
+      "height": 566,
+      "nodes": [
+        {
+          "description": null,
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "enterprise",
+          "title": "Blog System",
+          "id": "blogsystem",
+          "parent": null,
+          "level": 0,
+          "color": "muted",
+          "shape": "rectangle",
+          "children": [
+            "blogsystem.blogserver.singlePageApplication"
+          ],
+          "inEdges": [
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "outEdges": [
+            "blogsystem:customer"
+          ],
+          "depth": 1,
+          "navigateTo": "index",
+          "position": [
+            8,
+            8
+          ],
+          "size": {
+            "width": 402,
+            "height": 284
+          },
+          "labels": [
+            {
+              "fontSize": 13,
+              "fontStyle": "bold",
+              "color": "#cbd5e1b3",
+              "text": "BLOG SYSTEM",
+              "pt": [
+                8,
+                15
+              ],
+              "align": "left",
+              "width": 95
+            }
+          ]
+        },
+        {
+          "description": "Provides all of the UIs of blog functionality to customers via their web browser.",
+          "technology": "JavaScript and ReactJS",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "Single-Page Application",
+          "id": "blogsystem.blogserver.singlePageApplication",
+          "parent": "blogsystem",
+          "level": 1,
+          "color": "primary",
+          "shape": "browser",
+          "children": [],
+          "inEdges": [
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "outEdges": [],
+          "navigateTo": "spa",
+          "position": [
+            47,
+            72
+          ],
+          "size": {
+            "width": 323,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Single-Page Application",
+              "pt": [
+                56,
+                68
+              ],
+              "align": "left",
+              "width": 213
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "JavaScript and ReactJS",
+              "pt": [
+                98,
+                89
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Provides all of the UIs of blog functionality",
+              "pt": [
+                33,
+                111
+              ],
+              "align": "left",
+              "width": 260
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "to customers via their web browser.",
+              "pt": [
+                52,
+                127
+              ],
+              "align": "left",
+              "width": 221
+            }
+          ]
+        },
+        {
+          "description": "Owner of blog, post and manage his blogs on app.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "person",
+          "title": "Blog Owner",
+          "id": "customer",
+          "parent": null,
+          "level": 0,
+          "color": "green",
+          "shape": "person",
+          "children": [],
+          "inEdges": [
+            "blogsystem:customer"
+          ],
+          "outEdges": [
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "position": [
+            37,
+            386
+          ],
+          "size": {
+            "width": 344,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f8fafc",
+              "text": "Blog Owner",
+              "pt": [
+                120,
+                77
+              ],
+              "align": "left",
+              "width": 105
+            },
+            {
+              "fontSize": 14,
+              "color": "#c2f0c2",
+              "text": "Owner of blog, post and manage his blogs on",
+              "pt": [
+                32,
+                100
+              ],
+              "align": "left",
+              "width": 282
+            },
+            {
+              "fontSize": 14,
+              "color": "#c2f0c2",
+              "text": "app.",
+              "pt": [
+                159,
+                117
+              ],
+              "align": "left",
+              "width": 28
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "customer:blogsystem.blogserver.singlePageApplication",
+          "parent": null,
+          "source": "customer",
+          "target": "blogsystem.blogserver.singlePageApplication",
+          "label": "Views account and blogs",
+          "relations": [
+            "eb7c30d2ff9d533b1f5b7d82b273a62a8c7755e8"
+          ],
+          "points": [
+            [
+              307,
+              386
+            ],
+            [
+              323,
+              362
+            ],
+            [
+              331,
+              334
+            ],
+            [
+              321,
+              307
+            ],
+            [
+              316,
+              292
+            ],
+            [
+              309,
+              277
+            ],
+            [
+              300,
+              263
+            ]
+          ],
+          "headArrowPoint": [
+            293,
+            252
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Views account and blogs",
+              "pt": [
+                334,
+                323
+              ],
+              "align": "left",
+              "width": 144
+            }
+          ],
+          "labelBBox": {
+            "x": 330,
+            "y": 306,
+            "width": 152,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              297,
+              265
+            ],
+            [
+              294,
+              254
+            ],
+            [
+              303,
+              261
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem:customer",
+          "parent": null,
+          "source": "blogsystem",
+          "target": "customer",
+          "label": "Sends e-mails to",
+          "relations": [
+            "4d1d3696a85887ce5ac01af825b15ea5f7ed0bbd"
+          ],
+          "points": [
+            [
+              185,
+              292
+            ],
+            [
+              185,
+              305
+            ],
+            [
+              185,
+              318
+            ],
+            [
+              186,
+              331
+            ],
+            [
+              187,
+              345
+            ],
+            [
+              189,
+              359
+            ],
+            [
+              191,
+              373
+            ]
+          ],
+          "headArrowPoint": [
+            192,
+            386
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mails to",
+              "pt": [
+                195,
+                323
+              ],
+              "align": "left",
+              "width": 97
+            }
+          ],
+          "labelBBox": {
+            "x": 191,
+            "y": 306,
+            "width": 105,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              194,
+              372
+            ],
+            [
+              192,
+              383
+            ],
+            [
+              187,
+              374
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spa",
+      "viewOf": "blogsystem.blogserver.singlePageApplication",
+      "title": "Single-Page Application",
+      "description": null,
+      "tags": null,
+      "links": null,
+      "docUri": "file:///d%3A/gen-c4/uploads/1/src/blog.c4",
+      "relativePath": "",
+      "autoLayout": "TB",
+      "width": 823,
+      "height": 943,
+      "nodes": [
+        {
+          "description": "Central orchestrator for handle user's blog actions",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "Blog System Server",
+          "id": "blogsystem.blogserver",
+          "parent": null,
+          "level": 0,
+          "color": "muted",
+          "shape": "rectangle",
+          "children": [
+            "blogsystem.blogserver.webApplication",
+            "blogsystem.blogserver.singlePageApplication",
+            "blogsystem.blogserver.apiApplication"
+          ],
+          "inEdges": [
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "outEdges": [],
+          "depth": 1,
+          "navigateTo": "ibsContainers",
+          "position": [
+            8,
+            8
+          ],
+          "size": {
+            "width": 431,
+            "height": 927
+          },
+          "labels": [
+            {
+              "fontSize": 13,
+              "fontStyle": "bold",
+              "color": "#cbd5e1b3",
+              "text": "BLOG SYSTEM SERVER",
+              "pt": [
+                8,
+                15
+              ],
+              "align": "left",
+              "width": 152
+            }
+          ]
+        },
+        {
+          "description": "Delivers the static content and the Blog single page application.",
+          "technology": "Java and Spring MVC",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "Web Application",
+          "id": "blogsystem.blogserver.webApplication",
+          "parent": "blogsystem.blogserver",
+          "level": 1,
+          "color": "secondary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [],
+          "outEdges": [
+            "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication"
+          ],
+          "navigateTo": "webapp",
+          "position": [
+            47,
+            72
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f0f9ff",
+              "text": "Web Application",
+              "pt": [
+                89,
+                68
+              ],
+              "align": "left",
+              "width": 145
+            },
+            {
+              "fontSize": 12,
+              "color": "#b6ecf7",
+              "text": "Java and Spring MVC",
+              "pt": [
+                103,
+                89
+              ],
+              "align": "left",
+              "width": 117
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "Delivers the static content and the Blog",
+              "pt": [
+                40,
+                111
+              ],
+              "align": "left",
+              "width": 243
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "single page application.",
+              "pt": [
+                88,
+                127
+              ],
+              "align": "left",
+              "width": 147
+            }
+          ]
+        },
+        {
+          "description": "Provides all of the UIs of blog functionality to customers via their web browser.",
+          "technology": "JavaScript and ReactJS",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "Single-Page Application",
+          "id": "blogsystem.blogserver.singlePageApplication",
+          "parent": "blogsystem.blogserver",
+          "level": 1,
+          "color": "green",
+          "shape": "browser",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication",
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication"
+          ],
+          "position": [
+            61,
+            401
+          ],
+          "size": {
+            "width": 323,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f8fafc",
+              "text": "Single-Page Application",
+              "pt": [
+                56,
+                68
+              ],
+              "align": "left",
+              "width": 213
+            },
+            {
+              "fontSize": 12,
+              "color": "#c2f0c2",
+              "text": "JavaScript and ReactJS",
+              "pt": [
+                98,
+                90
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#c2f0c2",
+              "text": "Provides all of the UIs of blog functionality",
+              "pt": [
+                33,
+                111
+              ],
+              "align": "left",
+              "width": 260
+            },
+            {
+              "fontSize": 14,
+              "color": "#c2f0c2",
+              "text": "to customers via their web browser.",
+              "pt": [
+                52,
+                128
+              ],
+              "align": "left",
+              "width": 221
+            }
+          ]
+        },
+        {
+          "description": "Provides blog functionality via a JSON/HTTPS API.",
+          "technology": "Java and Spring MVC",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "API Application",
+          "id": "blogsystem.blogserver.apiApplication",
+          "parent": "blogsystem.blogserver",
+          "level": 1,
+          "color": "secondary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication"
+          ],
+          "outEdges": [],
+          "navigateTo": "apiApp",
+          "position": [
+            48,
+            715
+          ],
+          "size": {
+            "width": 350,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f0f9ff",
+              "text": "API Application",
+              "pt": [
+                108,
+                67
+              ],
+              "align": "left",
+              "width": 136
+            },
+            {
+              "fontSize": 12,
+              "color": "#b6ecf7",
+              "text": "Java and Spring MVC",
+              "pt": [
+                117,
+                89
+              ],
+              "align": "left",
+              "width": 117
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "Provides blog functionality via a JSON/HTTPS",
+              "pt": [
+                32,
+                110
+              ],
+              "align": "left",
+              "width": 288
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "API.",
+              "pt": [
+                162,
+                127
+              ],
+              "align": "left",
+              "width": 27
+            }
+          ]
+        },
+        {
+          "description": "Owner of blog, post and manage his blogs on app.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "person",
+          "title": "Blog Owner",
+          "id": "customer",
+          "parent": null,
+          "level": 0,
+          "color": "secondary",
+          "shape": "person",
+          "children": [],
+          "inEdges": [],
+          "outEdges": [
+            "customer:blogsystem.blogserver.singlePageApplication"
+          ],
+          "navigateTo": "customer",
+          "position": [
+            479,
+            72
+          ],
+          "size": {
+            "width": 344,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f0f9ff",
+              "text": "Blog Owner",
+              "pt": [
+                120,
+                77
+              ],
+              "align": "left",
+              "width": 105
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "Owner of blog, post and manage his blogs on",
+              "pt": [
+                32,
+                101
+              ],
+              "align": "left",
+              "width": 282
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "app.",
+              "pt": [
+                159,
+                118
+              ],
+              "align": "left",
+              "width": 28
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication",
+          "parent": "blogsystem.blogserver",
+          "source": "blogsystem.blogserver.webApplication",
+          "target": "blogsystem.blogserver.singlePageApplication",
+          "label": "Delivers to the customer's web browser",
+          "relations": [
+            "b4f3dc430e6a23ae31f0dc2fb7e41257651e04ba"
+          ],
+          "points": [
+            [
+              213,
+              252
+            ],
+            [
+              215,
+              294
+            ],
+            [
+              217,
+              345
+            ],
+            [
+              219,
+              388
+            ]
+          ],
+          "headArrowPoint": [
+            219,
+            401
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Delivers to the customer's web",
+              "pt": [
+                227,
+                323
+              ],
+              "align": "left",
+              "width": 177
+            },
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "browser",
+              "pt": [
+                227,
+                338
+              ],
+              "align": "left",
+              "width": 47
+            }
+          ],
+          "labelBBox": {
+            "x": 223,
+            "y": 306,
+            "width": 185,
+            "height": 36
+          },
+          "headArrow": [
+            [
+              222,
+              388
+            ],
+            [
+              219,
+              398
+            ],
+            [
+              215,
+              388
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication",
+          "parent": "blogsystem.blogserver",
+          "source": "blogsystem.blogserver.singlePageApplication",
+          "target": "blogsystem.blogserver.apiApplication",
+          "label": "Makes API calls to",
+          "relations": [
+            "e0dc247a6dffca7848778f48af8d2ab447fd1507",
+            "2d28b5bf083a048b233873eb8b863f9576205943",
+            "02e0e9656b2b18eab503fe0d4c411b22de6ec086"
+          ],
+          "points": [
+            [
+              223,
+              581
+            ],
+            [
+              223,
+              619
+            ],
+            [
+              223,
+              663
+            ],
+            [
+              223,
+              702
+            ]
+          ],
+          "headArrowPoint": [
+            223,
+            715
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Makes API calls to",
+              "pt": [
+                233,
+                652
+              ],
+              "align": "left",
+              "width": 107
+            }
+          ],
+          "labelBBox": {
+            "x": 229,
+            "y": 635,
+            "width": 115,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              227,
+              702
+            ],
+            [
+              223,
+              712
+            ],
+            [
+              220,
+              702
+            ]
+          ]
+        },
+        {
+          "id": "customer:blogsystem.blogserver.singlePageApplication",
+          "parent": null,
+          "source": "customer",
+          "target": "blogsystem.blogserver.singlePageApplication",
+          "label": "Views account and blogs",
+          "relations": [
+            "eb7c30d2ff9d533b1f5b7d82b273a62a8c7755e8"
+          ],
+          "points": [
+            [
+              550,
+              252
+            ],
+            [
+              514,
+              283
+            ],
+            [
+              472,
+              317
+            ],
+            [
+              433,
+              346
+            ],
+            [
+              413,
+              362
+            ],
+            [
+              390,
+              378
+            ],
+            [
+              368,
+              394
+            ]
+          ],
+          "headArrowPoint": [
+            357,
+            401
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Views account and blogs",
+              "pt": [
+                492,
+                331
+              ],
+              "align": "left",
+              "width": 144
+            }
+          ],
+          "labelBBox": {
+            "x": 488,
+            "y": 314,
+            "width": 152,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              370,
+              397
+            ],
+            [
+              360,
+              400
+            ],
+            [
+              366,
+              391
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "apiApp",
+      "viewOf": "blogsystem.blogserver.apiApplication",
+      "title": "API Application - Components",
+      "description": null,
+      "tags": null,
+      "links": null,
+      "docUri": "file:///d%3A/gen-c4/uploads/1/src/blog.c4",
+      "relativePath": "",
+      "autoLayout": "TB",
+      "width": 1276,
+      "height": 1168,
+      "nodes": [
+        {
+          "description": "Provides blog functionality via a JSON/HTTPS API.",
+          "technology": "Java and Spring MVC",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "API Application",
+          "id": "blogsystem.blogserver.apiApplication",
+          "parent": null,
+          "level": 0,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [
+            "blogsystem.blogserver.apiApplication.signinController",
+            "blogsystem.blogserver.apiApplication.postController",
+            "blogsystem.blogserver.apiApplication.resetPasswordController",
+            "blogsystem.blogserver.apiApplication.securityComponent",
+            "blogsystem.blogserver.apiApplication.emailComponent"
+          ],
+          "inEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.resetPasswordController",
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.postController",
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.signinController"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.apiApplication.securityComponent:blogsystem.blogserver.database",
+            "blogsystem.blogserver.apiApplication.emailComponent:blogsystem.email"
+          ],
+          "depth": 1,
+          "position": [
+            8,
+            267
+          ],
+          "size": {
+            "width": 1260,
+            "height": 597
+          },
+          "labels": [
+            {
+              "fontSize": 13,
+              "fontStyle": "bold",
+              "color": "#bfdbfeb3",
+              "text": "API APPLICATION",
+              "pt": [
+                8,
+                15
+              ],
+              "align": "left",
+              "width": 114
+            }
+          ]
+        },
+        {
+          "description": "Allows users to sign in to the Blog System.",
+          "technology": "Spring MVC Rest Controller",
+          "tags": null,
+          "links": null,
+          "kind": "component",
+          "title": "Sign In Controller",
+          "id": "blogsystem.blogserver.apiApplication.signinController",
+          "parent": "blogsystem.blogserver.apiApplication",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.signinController"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.apiApplication.signinController:blogsystem.blogserver.apiApplication.securityComponent"
+          ],
+          "position": [
+            48,
+            331
+          ],
+          "size": {
+            "width": 326,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Sign In Controller",
+              "pt": [
+                86,
+                76
+              ],
+              "align": "left",
+              "width": 155
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Spring MVC Rest Controller",
+              "pt": [
+                89,
+                97
+              ],
+              "align": "left",
+              "width": 149
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Allows users to sign in to the Blog System.",
+              "pt": [
+                32,
+                119
+              ],
+              "align": "left",
+              "width": 264
+            }
+          ]
+        },
+        {
+          "description": "Provides functionality related to signing in, changing passwords, etc.",
+          "technology": "Spring Bean",
+          "tags": null,
+          "links": null,
+          "kind": "component",
+          "title": "Security Component",
+          "id": "blogsystem.blogserver.apiApplication.securityComponent",
+          "parent": "blogsystem.blogserver.apiApplication",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.apiApplication.resetPasswordController:blogsystem.blogserver.apiApplication.securityComponent",
+            "blogsystem.blogserver.apiApplication.signinController:blogsystem.blogserver.apiApplication.securityComponent"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.apiApplication.securityComponent:blogsystem.blogserver.database"
+          ],
+          "position": [
+            261,
+            644
+          ],
+          "size": {
+            "width": 324,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Security Component",
+              "pt": [
+                72,
+                68
+              ],
+              "align": "left",
+              "width": 182
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Spring Bean",
+              "pt": [
+                129,
+                90
+              ],
+              "align": "left",
+              "width": 67
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Provides functionality related to signing in,",
+              "pt": [
+                32,
+                111
+              ],
+              "align": "left",
+              "width": 262
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "changing passwords, etc.",
+              "pt": [
+                84,
+                128
+              ],
+              "align": "left",
+              "width": 158
+            }
+          ]
+        },
+        {
+          "description": "Provides customers all information about blogs.",
+          "technology": "Spring MVC Rest Controller",
+          "tags": null,
+          "links": null,
+          "kind": "component",
+          "title": "Post Controller",
+          "id": "blogsystem.blogserver.apiApplication.postController",
+          "parent": "blogsystem.blogserver.apiApplication",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.postController"
+          ],
+          "outEdges": [],
+          "position": [
+            473,
+            331
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Post Controller",
+              "pt": [
+                95,
+                67
+              ],
+              "align": "left",
+              "width": 133
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Spring MVC Rest Controller",
+              "pt": [
+                87,
+                89
+              ],
+              "align": "left",
+              "width": 149
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Provides customers all information about",
+              "pt": [
+                35,
+                110
+              ],
+              "align": "left",
+              "width": 253
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "blogs.",
+              "pt": [
+                143,
+                127
+              ],
+              "align": "left",
+              "width": 38
+            }
+          ]
+        },
+        {
+          "description": "Allows users to reset their passwords with a single use URL.",
+          "technology": "Spring MVC Rest Controller",
+          "tags": null,
+          "links": null,
+          "kind": "component",
+          "title": "Reset Password Controller",
+          "id": "blogsystem.blogserver.apiApplication.resetPasswordController",
+          "parent": "blogsystem.blogserver.apiApplication",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.resetPasswordController"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.apiApplication.resetPasswordController:blogsystem.blogserver.apiApplication.emailComponent",
+            "blogsystem.blogserver.apiApplication.resetPasswordController:blogsystem.blogserver.apiApplication.securityComponent"
+          ],
+          "position": [
+            894,
+            331
+          ],
+          "size": {
+            "width": 334,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Reset Password Controller",
+              "pt": [
+                49,
+                67
+              ],
+              "align": "left",
+              "width": 238
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Spring MVC Rest Controller",
+              "pt": [
+                93,
+                89
+              ],
+              "align": "left",
+              "width": 149
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Allows users to reset their passwords with a",
+              "pt": [
+                32,
+                110
+              ],
+              "align": "left",
+              "width": 272
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "single use URL.",
+              "pt": [
+                118,
+                127
+              ],
+              "align": "left",
+              "width": 99
+            }
+          ]
+        },
+        {
+          "description": "Sends e-mails to users.",
+          "technology": "Spring Bean",
+          "tags": null,
+          "links": null,
+          "kind": "component",
+          "title": "E-mail Component",
+          "id": "blogsystem.blogserver.apiApplication.emailComponent",
+          "parent": "blogsystem.blogserver.apiApplication",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.apiApplication.resetPasswordController:blogsystem.blogserver.apiApplication.emailComponent"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.apiApplication.emailComponent:blogsystem.email"
+          ],
+          "position": [
+            900,
+            644
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "E-mail Component",
+              "pt": [
+                79,
+                76
+              ],
+              "align": "left",
+              "width": 166
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Spring Bean",
+              "pt": [
+                128,
+                98
+              ],
+              "align": "left",
+              "width": 67
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Sends e-mails to users.",
+              "pt": [
+                88,
+                119
+              ],
+              "align": "left",
+              "width": 147
+            }
+          ]
+        },
+        {
+          "description": "Provides all of the UIs of blog functionality to customers via their web browser.",
+          "technology": "JavaScript and ReactJS",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "Single-Page Application",
+          "id": "blogsystem.blogserver.singlePageApplication",
+          "parent": null,
+          "level": 0,
+          "color": "muted",
+          "shape": "browser",
+          "children": [],
+          "inEdges": [],
+          "outEdges": [
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.resetPasswordController",
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.postController",
+            "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.signinController"
+          ],
+          "navigateTo": "spa",
+          "position": [
+            472,
+            0
+          ],
+          "size": {
+            "width": 323,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f8fafc",
+              "text": "Single-Page Application",
+              "pt": [
+                56,
+                68
+              ],
+              "align": "left",
+              "width": 213
+            },
+            {
+              "fontSize": 12,
+              "color": "#cbd5e1",
+              "text": "JavaScript and ReactJS",
+              "pt": [
+                98,
+                90
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "Provides all of the UIs of blog functionality",
+              "pt": [
+                33,
+                111
+              ],
+              "align": "left",
+              "width": 260
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "to customers via their web browser.",
+              "pt": [
+                52,
+                128
+              ],
+              "align": "left",
+              "width": 221
+            }
+          ]
+        },
+        {
+          "description": "Stores user registration information, hashed authentication credentials, access logs, etc.",
+          "technology": "Oracle Database Schema",
+          "tags": null,
+          "links": null,
+          "kind": "database",
+          "title": "Database",
+          "id": "blogsystem.blogserver.database",
+          "parent": null,
+          "level": 0,
+          "color": "muted",
+          "shape": "storage",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.apiApplication.securityComponent:blogsystem.blogserver.database"
+          ],
+          "outEdges": [],
+          "position": [
+            256,
+            957
+          ],
+          "size": {
+            "width": 334,
+            "height": 211
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f8fafc",
+              "text": "Database",
+              "pt": [
+                125,
+                84
+              ],
+              "align": "left",
+              "width": 86
+            },
+            {
+              "fontSize": 12,
+              "color": "#cbd5e1",
+              "text": "Oracle Database Schema",
+              "pt": [
+                99,
+                105
+              ],
+              "align": "left",
+              "width": 138
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "Stores user registration information, hashed",
+              "pt": [
+                32,
+                127
+              ],
+              "align": "left",
+              "width": 272
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "authentication credentials, access logs, etc.",
+              "pt": [
+                32,
+                143
+              ],
+              "align": "left",
+              "width": 271
+            }
+          ]
+        },
+        {
+          "description": "The internal Microsoft Exchange e-mail system.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "E-mail System",
+          "id": "blogsystem.email",
+          "parent": null,
+          "level": 0,
+          "color": "muted",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.apiApplication.emailComponent:blogsystem.email"
+          ],
+          "outEdges": [],
+          "position": [
+            900,
+            973
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f8fafc",
+              "text": "E-mail System",
+              "pt": [
+                97,
+                77
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "The internal Microsoft Exchange e-mail",
+              "pt": [
+                40,
+                101
+              ],
+              "align": "left",
+              "width": 243
+            },
+            {
+              "fontSize": 14,
+              "color": "#cbd5e1",
+              "text": "system.",
+              "pt": [
+                137,
+                118
+              ],
+              "align": "left",
+              "width": 49
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "blogsystem.blogserver.apiApplication.signinController:blogsystem.blogserver.apiApplication.securityComponent",
+          "parent": "blogsystem.blogserver.apiApplication",
+          "source": "blogsystem.blogserver.apiApplication.signinController",
+          "target": "blogsystem.blogserver.apiApplication.securityComponent",
+          "label": "Uses",
+          "relations": [
+            "db6acbb7832e5b991b7d0af1f0a083b8e0adc428"
+          ],
+          "points": [
+            [
+              272,
+              511
+            ],
+            [
+              298,
+              549
+            ],
+            [
+              329,
+              594
+            ],
+            [
+              356,
+              634
+            ]
+          ],
+          "headArrowPoint": [
+            363,
+            644
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Uses",
+              "pt": [
+                334,
+                581
+              ],
+              "align": "left",
+              "width": 30
+            }
+          ],
+          "labelBBox": {
+            "x": 330,
+            "y": 564,
+            "width": 38,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              359,
+              632
+            ],
+            [
+              361,
+              642
+            ],
+            [
+              353,
+              636
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.apiApplication.resetPasswordController:blogsystem.blogserver.apiApplication.securityComponent",
+          "parent": "blogsystem.blogserver.apiApplication",
+          "source": "blogsystem.blogserver.apiApplication.resetPasswordController",
+          "target": "blogsystem.blogserver.apiApplication.securityComponent",
+          "label": "Uses",
+          "relations": [
+            "e0cb6b4e13545ec2843baf84bdf704e61669ea4f"
+          ],
+          "points": [
+            [
+              895,
+              503
+            ],
+            [
+              803,
+              548
+            ],
+            [
+              689,
+              603
+            ],
+            [
+              597,
+              649
+            ]
+          ],
+          "headArrowPoint": [
+            585,
+            654
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Uses",
+              "pt": [
+                771,
+                581
+              ],
+              "align": "left",
+              "width": 30
+            }
+          ],
+          "labelBBox": {
+            "x": 767,
+            "y": 564,
+            "width": 38,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              598,
+              652
+            ],
+            [
+              588,
+              653
+            ],
+            [
+              595,
+              645
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.apiApplication.resetPasswordController:blogsystem.blogserver.apiApplication.emailComponent",
+          "parent": "blogsystem.blogserver.apiApplication",
+          "source": "blogsystem.blogserver.apiApplication.resetPasswordController",
+          "target": "blogsystem.blogserver.apiApplication.emailComponent",
+          "label": "Uses",
+          "relations": [
+            "098e4db0fceeac87ee22f633a7e272153756e5b7"
+          ],
+          "points": [
+            [
+              1061,
+              511
+            ],
+            [
+              1061,
+              548
+            ],
+            [
+              1061,
+              592
+            ],
+            [
+              1061,
+              631
+            ]
+          ],
+          "headArrowPoint": [
+            1061,
+            644
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Uses",
+              "pt": [
+                1071,
+                581
+              ],
+              "align": "left",
+              "width": 30
+            }
+          ],
+          "labelBBox": {
+            "x": 1067,
+            "y": 564,
+            "width": 38,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              1065,
+              631
+            ],
+            [
+              1061,
+              641
+            ],
+            [
+              1058,
+              631
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.signinController",
+          "parent": null,
+          "source": "blogsystem.blogserver.singlePageApplication",
+          "target": "blogsystem.blogserver.apiApplication.signinController",
+          "label": "Makes API calls to",
+          "relations": [
+            "e0dc247a6dffca7848778f48af8d2ab447fd1507"
+          ],
+          "points": [
+            [
+              520,
+              180
+            ],
+            [
+              463,
+              224
+            ],
+            [
+              394,
+              278
+            ],
+            [
+              336,
+              323
+            ]
+          ],
+          "headArrowPoint": [
+            326,
+            331
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Makes API calls to",
+              "pt": [
+                458,
+                251
+              ],
+              "align": "left",
+              "width": 107
+            }
+          ],
+          "labelBBox": {
+            "x": 454,
+            "y": 234,
+            "width": 115,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              338,
+              326
+            ],
+            [
+              328,
+              329
+            ],
+            [
+              334,
+              320
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.postController",
+          "parent": null,
+          "source": "blogsystem.blogserver.singlePageApplication",
+          "target": "blogsystem.blogserver.apiApplication.postController",
+          "label": "Makes API calls to",
+          "relations": [
+            "2d28b5bf083a048b233873eb8b863f9576205943"
+          ],
+          "points": [
+            [
+              634,
+              180
+            ],
+            [
+              634,
+              223
+            ],
+            [
+              634,
+              274
+            ],
+            [
+              634,
+              318
+            ]
+          ],
+          "headArrowPoint": [
+            634,
+            331
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Makes API calls to",
+              "pt": [
+                644,
+                251
+              ],
+              "align": "left",
+              "width": 107
+            }
+          ],
+          "labelBBox": {
+            "x": 640,
+            "y": 234,
+            "width": 115,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              638,
+              318
+            ],
+            [
+              634,
+              328
+            ],
+            [
+              631,
+              318
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.singlePageApplication:blogsystem.blogserver.apiApplication.resetPasswordController",
+          "parent": null,
+          "source": "blogsystem.blogserver.singlePageApplication",
+          "target": "blogsystem.blogserver.apiApplication.resetPasswordController",
+          "label": "Makes API calls to",
+          "relations": [
+            "02e0e9656b2b18eab503fe0d4c411b22de6ec086"
+          ],
+          "points": [
+            [
+              750,
+              180
+            ],
+            [
+              807,
+              224
+            ],
+            [
+              877,
+              278
+            ],
+            [
+              936,
+              323
+            ]
+          ],
+          "headArrowPoint": [
+            946,
+            331
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Makes API calls to",
+              "pt": [
+                857,
+                251
+              ],
+              "align": "left",
+              "width": 107
+            }
+          ],
+          "labelBBox": {
+            "x": 853,
+            "y": 234,
+            "width": 115,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              938,
+              320
+            ],
+            [
+              943,
+              329
+            ],
+            [
+              933,
+              326
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.apiApplication.securityComponent:blogsystem.blogserver.database",
+          "parent": null,
+          "source": "blogsystem.blogserver.apiApplication.securityComponent",
+          "target": "blogsystem.blogserver.database",
+          "label": "Reads from and writes to",
+          "relations": [
+            "2579e5bd7a2059d962bddcd5e3edcc70981c10d2"
+          ],
+          "points": [
+            [
+              423,
+              824
+            ],
+            [
+              423,
+              861
+            ],
+            [
+              423,
+              904
+            ],
+            [
+              423,
+              944
+            ]
+          ],
+          "headArrowPoint": [
+            423,
+            957
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Reads from and writes to",
+              "pt": [
+                433,
+                895
+              ],
+              "align": "left",
+              "width": 145
+            }
+          ],
+          "labelBBox": {
+            "x": 429,
+            "y": 878,
+            "width": 153,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              427,
+              944
+            ],
+            [
+              423,
+              954
+            ],
+            [
+              420,
+              944
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem.blogserver.apiApplication.emailComponent:blogsystem.email",
+          "parent": null,
+          "source": "blogsystem.blogserver.apiApplication.emailComponent",
+          "target": "blogsystem.email",
+          "label": "Sends e-mail using",
+          "relations": [
+            "2ba424408ddc03d9f0adfe365450989d390c75a3"
+          ],
+          "points": [
+            [
+              1061,
+              824
+            ],
+            [
+              1061,
+              866
+            ],
+            [
+              1061,
+              917
+            ],
+            [
+              1061,
+              960
+            ]
+          ],
+          "headArrowPoint": [
+            1061,
+            973
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mail using",
+              "pt": [
+                1071,
+                895
+              ],
+              "align": "left",
+              "width": 111
+            }
+          ],
+          "labelBBox": {
+            "x": 1067,
+            "y": 878,
+            "width": 119,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              1065,
+              960
+            ],
+            [
+              1061,
+              970
+            ],
+            [
+              1058,
+              960
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "webapp",
+      "viewOf": "blogsystem.blogserver.webApplication",
+      "title": "Web Application",
+      "description": null,
+      "tags": null,
+      "links": null,
+      "docUri": "file:///d%3A/gen-c4/uploads/1/src/blog.c4",
+      "relativePath": "",
+      "autoLayout": "TB",
+      "width": 1109,
+      "height": 662,
+      "nodes": [
+        {
+          "description": null,
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "enterprise",
+          "title": "Blog System",
+          "id": "blogsystem",
+          "parent": null,
+          "level": 0,
+          "color": "muted",
+          "shape": "rectangle",
+          "children": [
+            "blogsystem.blogserver"
+          ],
+          "inEdges": [
+            "customer:blogsystem.blogserver.webApplication"
+          ],
+          "outEdges": [
+            "blogsystem:customer"
+          ],
+          "depth": 2,
+          "navigateTo": "index",
+          "position": [
+            8,
+            8
+          ],
+          "size": {
+            "width": 1093,
+            "height": 388
+          },
+          "labels": [
+            {
+              "fontSize": 13,
+              "fontStyle": "bold",
+              "color": "#cbd5e1b3",
+              "text": "BLOG SYSTEM",
+              "pt": [
+                8,
+                15
+              ],
+              "align": "left",
+              "width": 95
+            }
+          ]
+        },
+        {
+          "description": "Central orchestrator for handle user's blog actions",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "softwaresystem",
+          "title": "Blog System Server",
+          "id": "blogsystem.blogserver",
+          "parent": "blogsystem",
+          "level": 1,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [
+            "blogsystem.blogserver.webApplication",
+            "blogsystem.blogserver.singlePageApplication"
+          ],
+          "inEdges": [
+            "customer:blogsystem.blogserver.webApplication"
+          ],
+          "outEdges": [],
+          "depth": 1,
+          "navigateTo": "ibsContainers",
+          "position": [
+            48,
+            72
+          ],
+          "size": {
+            "width": 1013,
+            "height": 284
+          },
+          "labels": [
+            {
+              "fontSize": 13,
+              "fontStyle": "bold",
+              "color": "#bfdbfeb3",
+              "text": "BLOG SYSTEM SERVER",
+              "pt": [
+                8,
+                15
+              ],
+              "align": "left",
+              "width": 152
+            }
+          ]
+        },
+        {
+          "description": "Delivers the static content and the Blog single page application.",
+          "technology": "Java and Spring MVC",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "Web Application",
+          "id": "blogsystem.blogserver.webApplication",
+          "parent": "blogsystem.blogserver",
+          "level": 2,
+          "color": "primary",
+          "shape": "rectangle",
+          "children": [],
+          "inEdges": [
+            "customer:blogsystem.blogserver.webApplication"
+          ],
+          "outEdges": [
+            "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication"
+          ],
+          "position": [
+            700,
+            136
+          ],
+          "size": {
+            "width": 321,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Web Application",
+              "pt": [
+                89,
+                67
+              ],
+              "align": "left",
+              "width": 145
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "Java and Spring MVC",
+              "pt": [
+                103,
+                89
+              ],
+              "align": "left",
+              "width": 117
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Delivers the static content and the Blog",
+              "pt": [
+                40,
+                110
+              ],
+              "align": "left",
+              "width": 243
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "single page application.",
+              "pt": [
+                88,
+                127
+              ],
+              "align": "left",
+              "width": 147
+            }
+          ]
+        },
+        {
+          "description": "Provides all of the UIs of blog functionality to customers via their web browser.",
+          "technology": "JavaScript and ReactJS",
+          "tags": null,
+          "links": null,
+          "kind": "container",
+          "title": "Single-Page Application",
+          "id": "blogsystem.blogserver.singlePageApplication",
+          "parent": "blogsystem.blogserver",
+          "level": 2,
+          "color": "primary",
+          "shape": "browser",
+          "children": [],
+          "inEdges": [
+            "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication"
+          ],
+          "outEdges": [],
+          "navigateTo": "spa",
+          "position": [
+            87,
+            136
+          ],
+          "size": {
+            "width": 323,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#eff6ff",
+              "text": "Single-Page Application",
+              "pt": [
+                56,
+                67
+              ],
+              "align": "left",
+              "width": 213
+            },
+            {
+              "fontSize": 12,
+              "color": "#bfdbfe",
+              "text": "JavaScript and ReactJS",
+              "pt": [
+                98,
+                89
+              ],
+              "align": "left",
+              "width": 129
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "Provides all of the UIs of blog functionality",
+              "pt": [
+                33,
+                110
+              ],
+              "align": "left",
+              "width": 260
+            },
+            {
+              "fontSize": 14,
+              "color": "#bfdbfe",
+              "text": "to customers via their web browser.",
+              "pt": [
+                52,
+                127
+              ],
+              "align": "left",
+              "width": 221
+            }
+          ]
+        },
+        {
+          "description": "Owner of blog, post and manage his blogs on app.",
+          "technology": null,
+          "tags": null,
+          "links": null,
+          "kind": "person",
+          "title": "Blog Owner",
+          "id": "customer",
+          "parent": null,
+          "level": 0,
+          "color": "secondary",
+          "shape": "person",
+          "children": [],
+          "inEdges": [
+            "blogsystem:customer"
+          ],
+          "outEdges": [
+            "customer:blogsystem.blogserver.webApplication"
+          ],
+          "navigateTo": "customer",
+          "position": [
+            383,
+            482
+          ],
+          "size": {
+            "width": 344,
+            "height": 180
+          },
+          "labels": [
+            {
+              "fontSize": 20,
+              "color": "#f0f9ff",
+              "text": "Blog Owner",
+              "pt": [
+                120,
+                77
+              ],
+              "align": "left",
+              "width": 105
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "Owner of blog, post and manage his blogs on",
+              "pt": [
+                32,
+                101
+              ],
+              "align": "left",
+              "width": 282
+            },
+            {
+              "fontSize": 14,
+              "color": "#b6ecf7",
+              "text": "app.",
+              "pt": [
+                159,
+                118
+              ],
+              "align": "left",
+              "width": 28
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "blogsystem.blogserver.webApplication:blogsystem.blogserver.singlePageApplication",
+          "parent": "blogsystem.blogserver",
+          "source": "blogsystem.blogserver.webApplication",
+          "target": "blogsystem.blogserver.singlePageApplication",
+          "label": "Delivers to the customer's web browser",
+          "relations": [
+            "b4f3dc430e6a23ae31f0dc2fb7e41257651e04ba"
+          ],
+          "points": [
+            [
+              702,
+              226
+            ],
+            [
+              616,
+              226
+            ],
+            [
+              511,
+              226
+            ],
+            [
+              423,
+              226
+            ]
+          ],
+          "headArrowPoint": [
+            410,
+            226
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Delivers to the customer's web",
+              "pt": [
+                471,
+                199
+              ],
+              "align": "left",
+              "width": 177
+            },
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "browser",
+              "pt": [
+                471,
+                215
+              ],
+              "align": "left",
+              "width": 47
+            }
+          ],
+          "labelBBox": {
+            "x": 467,
+            "y": 182,
+            "width": 185,
+            "height": 37
+          },
+          "headArrow": [
+            [
+              423,
+              229
+            ],
+            [
+              413,
+              226
+            ],
+            [
+              423,
+              222
+            ]
+          ]
+        },
+        {
+          "id": "customer:blogsystem.blogserver.webApplication",
+          "parent": null,
+          "source": "customer",
+          "target": "blogsystem.blogserver.webApplication",
+          "label": "Visits blogsystem.com using HTTPS",
+          "relations": [
+            "78630d23f9aeccf43e42174fdf5e15eca7a45bd2"
+          ],
+          "points": [
+            [
+              634,
+              483
+            ],
+            [
+              677,
+              434
+            ],
+            [
+              730,
+              375
+            ],
+            [
+              774,
+              325
+            ]
+          ],
+          "headArrowPoint": [
+            783,
+            315
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Visits blogsystem.com using HTTPS",
+              "pt": [
+                708,
+                419
+              ],
+              "align": "left",
+              "width": 210
+            }
+          ],
+          "labelBBox": {
+            "x": 704,
+            "y": 402,
+            "width": 218,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              771,
+              323
+            ],
+            [
+              781,
+              318
+            ],
+            [
+              777,
+              328
+            ]
+          ]
+        },
+        {
+          "id": "blogsystem:customer",
+          "parent": null,
+          "source": "blogsystem",
+          "target": "customer",
+          "label": "Sends e-mails to",
+          "relations": [
+            "4d1d3696a85887ce5ac01af825b15ea5f7ed0bbd"
+          ],
+          "points": [
+            [
+              400,
+              396
+            ],
+            [
+              423,
+              422
+            ],
+            [
+              447,
+              449
+            ],
+            [
+              468,
+              473
+            ]
+          ],
+          "headArrowPoint": [
+            477,
+            483
+          ],
+          "labels": [
+            {
+              "fontSize": 13,
+              "color": "#c6c6c6",
+              "text": "Sends e-mails to",
+              "pt": [
+                430,
+                419
+              ],
+              "align": "left",
+              "width": 97
+            }
+          ],
+          "labelBBox": {
+            "x": 426,
+            "y": 402,
+            "width": 105,
+            "height": 21
+          },
+          "headArrow": [
+            [
+              471,
+              470
+            ],
+            [
+              475,
+              480
+            ],
+            [
+              465,
+              475
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

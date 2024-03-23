@@ -1,0 +1,1 @@
+export type ShapeSourceText = { type: 'Text'; text: string };

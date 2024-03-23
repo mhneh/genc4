@@ -1,0 +1,1 @@
+export type TextDecoration = 'underline' | 'none';

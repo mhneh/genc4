@@ -1,0 +1,1 @@
+export type ShapeSourceUrl = { type: 'Url'; url: string };

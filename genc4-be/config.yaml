@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+mongodb:
+  dbname: "genc4"
+  dbcollections:
+    workspaces: "workspaces"
+    users: "users"
+  dbuser: "root"
+  dbpassword: "password"
+  dbhost: "localhost:27017"
+
+auth:
+  # this is just for study purpose
+  secret: "4Ja67+nRUvEUg/fDpbnnVw="

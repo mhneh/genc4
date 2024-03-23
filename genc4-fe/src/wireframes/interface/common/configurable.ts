@@ -1,0 +1,1 @@
+export type Configurable = any;
