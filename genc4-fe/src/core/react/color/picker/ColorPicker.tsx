@@ -12,8 +12,8 @@ import * as React from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { Color, ColorPalette } from '@app/core/utils';
 import { texts } from '@app/texts';
-import { ColorList } from './ColorList.tsx';
-import { useEventCallback } from '../hooks/hooks.ts';
+import { ColorList } from '../list/ColorList.tsx';
+import { useEventCallback } from '../../hooks/hooks.ts';
 import './ColorPicker.scss';
 
 type ColorTab = 'palette' | 'advanced';

@@ -5,19 +5,34 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import { Dropdown } from 'antd';
-import * as React from 'react';
-import { DropTargetMonitor, useDrop } from 'react-dnd';
-import { NativeTypes } from 'react-dnd-html5-backend';
-import { findDOMNode } from 'react-dom';
-import { loadImagesToClipboardItems, sizeInPx, useClipboard, useEventCallback } from '@app/core';
-import { useAppDispatch } from '@app/wireframes/redux/store.ts';
-import { addShape, changeItemsAppearance, Diagram, getDiagram, getDiagramId, getEditor, getMasterDiagram, getSelection, RendererService, selectItems, Transform, transformItems, useStore } from '@app/wireframes/model';
-import { Editor } from '@app/wireframes/renderer/editor/Editor.tsx';
-import { DiagramRef, ItemsRef } from '../../model/actions/utils.ts';
-import { useContextMenu } from '../context-menu';
+import {Dropdown} from 'antd';
+import {useRef, useState, MouseEvent} from 'react';
+import {DropTargetMonitor, useDrop} from 'react-dnd';
+import {NativeTypes} from 'react-dnd-html5-backend';
+import {findDOMNode} from 'react-dom';
+import {loadImagesToClipboardItems, sizeInPx, useClipboard, useEventCallback} from '@app/core';
+import {useAppDispatch} from '@app/wireframes/redux/store.ts';
+import {
+    addShape,
+    changeItemsAppearance,
+    Diagram,
+    getDiagram,
+    getDiagramId,
+    getEditor,
+    getMasterDiagram,
+    getSelection,
+    RendererService,
+    selectItems,
+    Transform,
+    transformItems,
+    useStore
+} from '@app/wireframes/model';
+import {Editor} from '@app/wireframes/renderer/editor/Editor.tsx';
+import {DiagramRef, ItemsRef} from '@app/wireframes/model';
+import {useContextMenu} from '../context-menu';
 import './EditorView.scss';
 import {ShapeSource} from "@app/wireframes/interface/shape/source/shape-source.ts";
+import {addRelationship} from "@app/wireframes/redux/reducers/relationships.ts";
 
 export interface EditorViewProps {
     // The spacing.
@@ -32,62 +47,91 @@ export const EditorView = (props: EditorViewProps) => {
     }
 
     return (
-        <EditorViewInner {...props} diagram={diagram} />
+        <EditorViewInner {...props} diagram={diagram}/>
     );
 };
 
-export const EditorViewInner = ({ diagram, spacing }: EditorViewProps & { diagram: Diagram }) => {
+export const EditorViewInner = ({diagram, spacing}: EditorViewProps & { diagram: Diagram }) => {
     const dispatch = useAppDispatch();
-    const [menuVisible, setMenuVisible] = React.useState(false);
+    const [menuVisible, setMenuVisible] = useState(false);
     const editor = useStore(getEditor);
     const editorColor = editor.color;
     const editorSize = editor.size;
     const masterDiagram = useStore(getMasterDiagram);
-    const renderRef = React.useRef<any>();
-    const selectedPoint = React.useRef({ x: 0, y: 0 });
+    const renderRef = useRef<any>();
+    const selectedPoint = useRef({x: 0, y: 0});
     const selectedDiagramId = useStore(getDiagramId);
     const state = useStore(s => s);
     const zoom = useStore(s => s.ui.zoom);
     const zoomedSize = editorSize.mul(zoom);
     const contextMenu = useContextMenu(menuVisible);
 
-    const doChangeItemsAppearance = useEventCallback((diagram: DiagramRef, visuals: ItemsRef, key: string, value: any) => {
-        dispatch(changeItemsAppearance(diagram, visuals, key, value));
-    });
+    const doChangeItemsAppearance = useEventCallback(
+        (diagram: DiagramRef, visuals: ItemsRef, key: string, value: any) => {
+            dispatch(changeItemsAppearance(diagram, visuals, key, value));
+        });
 
-    const doSelectItems = useEventCallback((diagram: DiagramRef, items: ItemsRef) => {
-        dispatch(selectItems(diagram, items));
-    });
+    const doSelectItems = useEventCallback(
+        (diagram: DiagramRef, items: ItemsRef) => {
+            dispatch(selectItems(diagram, items));
+        });
 
-    const doTransformItems = useEventCallback((diagram: DiagramRef, items: ItemsRef, oldBounds: Transform, newBounds: Transform) => {
-        dispatch(transformItems(diagram, items, oldBounds, newBounds));
-    });
+    const doTransformItems = useEventCallback(
+        (
+            diagram: DiagramRef,
+            items: ItemsRef,
+            oldBounds: Transform,
+            newBounds: Transform
+        ) => {
+            dispatch(transformItems(diagram, items, oldBounds, newBounds));
+        });
 
-    const doSetPosition = useEventCallback((event: React.MouseEvent) => {
-        selectedPoint.current = { x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY };
-    });
-
-    const doPaste = useEventCallback((sources: ReadonlyArray<ShapeSource>, x: number, y: number) => {
-        if (!selectedDiagramId) {
-            return;
+    const doConnectItems = useEventCallback(
+        (diagram: string, source: string, target: string) => {
+            dispatch(addRelationship(diagram, {source, target}));
         }
+    );
 
-        const shapes = RendererService.createShapes(sources);
+    const doSetPosition = useEventCallback(
+        (event: MouseEvent) => {
+            selectedPoint.current = {
+                x: event.nativeEvent.offsetX,
+                y: event.nativeEvent.offsetY
+            };
+        });
 
-        for (const { appearance, renderer, size } of shapes) {
-            dispatch(addShape(selectedDiagramId, renderer, { position: { x, y }, size, appearance }));
+    const doPaste = useEventCallback(
+        (sources: ReadonlyArray<ShapeSource>, x: number, y: number) => {
+            if (!selectedDiagramId) {
+                return;
+            }
 
-            x += 40;
-            y += 40;
-        }
-    });
+            const shapes = RendererService.createShapes(sources);
+
+            for (const shape of shapes) {
+                const {
+                    appearance,
+                    renderer,
+                    size
+                } = shape;
+                const newShapeProps = {
+                    position: {x, y},
+                    size,
+                    appearance
+                };
+                dispatch(addShape(selectedDiagramId, renderer, newShapeProps));
+
+                x += 40;
+                y += 40;
+            }
+        });
 
     useClipboard({
         onPaste: event => {
             if (!selectedDiagramId) {
                 return;
             }
-    
+
             const x = selectedPoint.current.x;
             const y = selectedPoint.current.y;
 
@@ -122,25 +166,23 @@ export const EditorViewInner = ({ diagram, spacing }: EditorViewProps & { diagra
 
             let x = ((offset?.x || 0) - spacing - componentRect.left) / zoom;
             let y = ((offset?.y || 0) - spacing - componentRect.top) / zoom;
-
-            const itemType = monitor.getItemType();
-            switch (itemType) {
+            switch (monitor.getItemType()) {
                 case 'DND_ASSET':
                     dispatch(addShape(selectedDiagramId, item['name'], {
-                        position: { x, y },
+                        position: {x, y},
                         type: item['plugin'].type()
                     }));
                     break;
                 case 'DND_ICON':
-                    doPaste([{ type: 'Icon', ...item }], x, y);
+                    doPaste([{type: 'Icon', ...item}], x, y);
                     break;
                 case NativeTypes.TEXT:
-                    doPaste([{ type: 'Text', ...item }], x, y);
+                    doPaste([{type: 'Text', ...item}], x, y);
                     break;
                 case NativeTypes.URL: {
                     const urls: string[] = item.urls;
 
-                    doPaste(urls.map(url => ({ type: 'Url', url })), x, y);
+                    doPaste(urls.map(url => ({type: 'Url', url})), x, y);
                     break;
                 }
                 case NativeTypes.FILE: {
@@ -164,9 +206,9 @@ export const EditorViewInner = ({ diagram, spacing }: EditorViewProps & { diagra
     const padding = sizeInPx(spacing);
 
     return (
-        <Dropdown menu={contextMenu} trigger={['contextMenu']} onOpenChange={setMenuVisible}>            
+        <Dropdown menu={contextMenu} trigger={['contextMenu']} onOpenChange={setMenuVisible}>
             <div className='editor-view' onClick={doSetPosition}>
-                <div className='editor-diagram' style={{ width: w, height: h, padding }} ref={renderRef} >
+                <div className='editor-diagram' style={{width: w, height: h, padding}} ref={renderRef}>
                     <Editor
                         color={editorColor}
                         diagram={diagram}
@@ -174,6 +216,7 @@ export const EditorViewInner = ({ diagram, spacing }: EditorViewProps & { diagra
                         onChangeItemsAppearance={doChangeItemsAppearance}
                         onSelectItems={doSelectItems}
                         onTransformItems={doTransformItems}
+                        onConnectItems={doConnectItems}
                         selectionSet={getSelection(state)}
                         viewSize={editor.size}
                         zoom={zoom}

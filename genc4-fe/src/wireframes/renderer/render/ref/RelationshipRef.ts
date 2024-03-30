@@ -7,8 +7,9 @@
 
 import * as svg from '@svgdotjs/svg.js';
 import { DiagramItem, Renderer } from '@app/wireframes/model';
+import {Relationship} from "@app/wireframes/model/relationship/relationship.ts";
 
-export class ShapeRef {
+export class RelationshipRef {
     private previewShape: DiagramItem | null = null;
     private currentShape: DiagramItem | null = null;
     private currentIndex = -1;
@@ -50,7 +51,7 @@ export class ShapeRef {
         }
     }
 
-    public render(shape: DiagramItem) {
+    public render(relationship: Relationship) {
         const previousElement = this.renderedElement;
 
         if (this.currentShape === shape && previousElement) {
@@ -59,7 +60,9 @@ export class ShapeRef {
         }
 
         this.renderer.setContext(this.doc);
-        this.renderedElement = this.renderer.render(shape, previousElement, { debug: this.showDebugMarkers });
+        this.renderedElement = this.renderer.render(shape, previousElement, {
+            debug: this.showDebugMarkers
+        });
 
         // Always update shape to keep a reference to the actual object, not the old object.
         (this.renderedElement!.node as any)['shape'] = shape;

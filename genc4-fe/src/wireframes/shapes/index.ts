@@ -6,8 +6,6 @@
 */
 
 import {RendererService} from '@app/wireframes/model/renderer/renderer.service.ts';
-import {Browser, Button, Tabs} from './dependencies';
-import {AbstractControl} from '../model/renderer/impl/abstract-control.ts';
 import {Register} from "@app/wireframes/shapes/components/register.ts";
 import {C4Control} from "@app/wireframes/model/renderer/impl/c4-control.ts";
 import {SignIn} from "@app/wireframes/shapes/components/signin.ts";
@@ -20,6 +18,8 @@ import {SinglePageApplication} from "@app/wireframes/shapes/containers/spa.ts";
 import {ApiApplication} from "@app/wireframes/shapes/containers/api-application.ts";
 import {EmailSystem} from "@app/wireframes/shapes/contexts/email-system.ts";
 import {PersonalOwner} from "@app/wireframes/shapes/contexts/person.ts";
+import {RelationshipControl} from "@app/wireframes/model/renderer/impl/RelationshipControl.ts";
+import {Relationship} from "@app/wireframes/shapes/components/relationship.ts";
 
 export function registerShapeRenderers() {
 }
@@ -39,5 +39,5 @@ export function registerComponents() {
     RendererService.addRenderer(new C4Control(new EmailSystem()));
     RendererService.addRenderer(new C4Control(new PersonalOwner()));
 
-
+    RendererService.addRenderer(new RelationshipControl(new Relationship()));
 }

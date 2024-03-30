@@ -13,6 +13,7 @@ import { Diagram } from './diagram.ts';
 import { DiagramItemSet } from './diagram-item-set.ts';
 import { Transform } from '../transform/transform.ts';
 import {Shape} from "@app/wireframes/interface/shape/shape.ts";
+import {AssetType} from "@app/wireframes/interface/common/asset-type.ts";
 
 type ItemProps = {
     // The unique id for each item.
@@ -25,7 +26,7 @@ type ItemProps = {
     name?: string;
 
     // The type of the item.
-    type: 'Shape' | 'Group' | 'Components' | 'Containers';
+    type: AssetType;
 };
 
 type GroupProps = {
@@ -89,7 +90,7 @@ export type InitialShapeProps = {
     // The id of the renderer.
     renderer: string;
 
-    type: 'Shape' | 'Group' | 'Components' | 'Containers';
+    type: AssetType;
 } & InitialItemProps;
 
 export type InitialGroupProps = {

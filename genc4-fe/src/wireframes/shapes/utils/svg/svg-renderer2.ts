@@ -267,6 +267,7 @@ class Factory implements ShapeFactory {
 }
 
 export class SVGRenderer2 extends Factory implements AbstractRenderer2 {
+    
     private readonly measureDiv: HTMLDivElement;
 
     public static readonly INSTANCE = new SVGRenderer2();

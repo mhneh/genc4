@@ -41,7 +41,8 @@ export const ShapeImage = React.memo((props: ShapeImageProps) => {
 
     return (
         <div className='asset-shape-image'>
-            <ShapeRenderer ref={drag}
+            <ShapeRenderer
+                ref={drag}
                 desiredHeight={DESIRED_HEIGHT} 
                 desiredWidth={DESIRED_WIDTH} 
                 plugin={shape.plugin}

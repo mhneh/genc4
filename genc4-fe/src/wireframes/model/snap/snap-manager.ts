@@ -5,9 +5,9 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import { MathHelper, Rect2, Vec2 } from '@app/core/utils';
-import { Diagram } from '../diagram/diagram.ts';
-import { Transform } from '../transform/transform.ts';
+import {MathHelper, Rect2, Vec2} from '@app/core/utils';
+import {Diagram} from '../diagram/diagram.ts';
+import {Transform} from '../transform/transform.ts';
 
 const ROTATE_SNAP = 90 / 4;
 const MOVE_SNAP_GRID = 10;
@@ -19,10 +19,10 @@ const RESIZE_MINIMUM = 1;
 export type SnapMode = 'None' | 'Grid' | 'Shapes';
 export type SnapSide = 'Left' | 'Right' | 'Top' | 'Bottom';
 
-export type SnapResult = { 
+export type SnapResult = {
     snapX?: SnapLine;
     snapY?: SnapLine;
-    delta: Vec2; 
+    delta: Vec2;
 };
 
 export type SnapLine = {
@@ -31,13 +31,13 @@ export type SnapLine = {
 
     // The side.
     side?: SnapSide;
-    
+
     // The difference to a side.
     diff?: { x: number; y: number };
-    
+
     // The positions for space snap lines.
-    positions?: { x: number; y: number }[]; 
-    
+    positions?: { x: number; y: number }[];
+
     // True, if the snap line is for a center.
     isCenter?: boolean;
 
@@ -97,8 +97,9 @@ export class SnapManager {
         }
     }
 
-    public snapResizing(transform: Transform, delta: Vec2, snapMode: SnapMode, xMode = 1, yMode = 1, ignoreList: Record<string, any> = {}): SnapResult {
-        const result: SnapResult = { delta };
+    public snapResizing(transform: Transform, delta: Vec2, snapMode: SnapMode, xMode = 1, yMode = 1,
+                        ignoreList: Record<string, any> = {}): SnapResult {
+        const result: SnapResult = {delta};
 
         let dw = delta.x;
         let dh = delta.y;
@@ -106,20 +107,20 @@ export class SnapManager {
         if (snapMode === 'Shapes' && transform.rotation.degree === 0) {
             const aabb = transform.aabb;
 
-            const { xLines, yLines } = this.getSnapLines(ignoreList);
+            const {xLines, yLines} = this.getSnapLines(ignoreList);
 
             // Compute the new x and y-positions once.
             const l = -delta.x + aabb.left;
             const r = +delta.x + aabb.right;
 
             const t = -delta.y + aabb.top;
-            const b =  delta.y + aabb.bottom;
+            const b = delta.y + aabb.bottom;
 
             let snapX = Number.MAX_VALUE;
 
             const isXCandidate = (value: number, line: SnapLine) => {
                 const delta = Math.abs(value - line.value);
-                
+
                 if (delta > 0 && delta < RESIZE_SNAP_SHAPE && delta < snapX) {
                     snapX = delta;
                     return true;
@@ -133,7 +134,7 @@ export class SnapManager {
                 if (line.isCenter || line.positions) {
                     continue;
                 }
-                
+
                 if (xMode > 0) {
                     if (isXCandidate(r, line)) {
                         dw = line.value - aabb.right;
@@ -153,7 +154,7 @@ export class SnapManager {
 
             const isYCandidate = (value: number, line: SnapLine) => {
                 const delta = Math.abs(value - line.value);
-                
+
                 if (delta > 0 && delta < RESIZE_SNAP_SHAPE && delta < snapY) {
                     snapY = delta;
                     return true;
@@ -167,7 +168,7 @@ export class SnapManager {
                 if (line.isCenter || line.positions) {
                     continue;
                 }
-                
+
                 if (yMode > 0) {
                     if (isYCandidate(b, line)) {
                         dh = line.value - aabb.bottom;
@@ -200,8 +201,9 @@ export class SnapManager {
         return result;
     }
 
-    public snapMoving(transform: Transform, delta: Vec2, snapMode: SnapMode, ignoreList: Record<string, any> = {}): SnapResult {
-        const result: SnapResult = { delta };
+    public snapMoving(transform: Transform, delta: Vec2, snapMode: SnapMode,
+                      ignoreList: Record<string, any> = {}): SnapResult {
+        const result: SnapResult = {delta};
 
         const aabb = transform.aabb;
 
@@ -209,7 +211,7 @@ export class SnapManager {
         let y = aabb.y + delta.y;
 
         if (snapMode === 'Shapes') {
-            const { xLines, yLines, grid } = this.getSnapLines(ignoreList);
+            const {xLines, yLines, grid} = this.getSnapLines(ignoreList);
 
             // Compute the new x and y-positions once.
             const l = x;
@@ -217,7 +219,7 @@ export class SnapManager {
 
             const t = y;
             const b = delta.y + aabb.bottom;
-            
+
             const cx = delta.x + aabb.cx;
             const cy = delta.y + aabb.cy;
 
@@ -225,7 +227,7 @@ export class SnapManager {
 
             const isXCandidate = (value: number, line: SnapLine) => {
                 const delta = Math.abs(value - line.value);
-                
+
                 if (delta < MOVE_SNAP_SHAPE && delta < snapX) {
                     snapX = delta;
                     return true;
@@ -234,7 +236,7 @@ export class SnapManager {
                 return false;
             };
 
-            for (const line of xLines) {    
+            for (const line of xLines) {
                 // Distance lines have a bounds that must be close.
                 if (line.gridItem?.aabb && !isOverlapY(cy, aabb.height, line.gridItem?.aabb)) {
                     continue;
@@ -262,7 +264,7 @@ export class SnapManager {
 
             const isYCandidate = (value: number, line: SnapLine) => {
                 const delta = Math.abs(value - line.value);
-                
+
                 if (delta < MOVE_SNAP_SHAPE && delta < snapY) {
                     snapY = delta;
                     return true;
@@ -271,7 +273,7 @@ export class SnapManager {
                 return false;
             };
 
-            for (const line of yLines) {    
+            for (const line of yLines) {
                 // Distance lines have a bounds that must be close.
                 if (line.gridItem?.aabb && !isOverlapX(cx, aabb.width, line.gridItem?.aabb)) {
                     continue;
@@ -309,10 +311,10 @@ export class SnapManager {
 
     public getSnapLines(ignoreList: Record<string, any>) {
         if (this.xLines && this.yLines && this.grid) {
-            return { xLines: this.xLines, yLines: this.yLines, grid: this.grid };
+            return {xLines: this.xLines, yLines: this.yLines, grid: this.grid};
         }
 
-        const { currentDiagram, currentView } = this;
+        const {currentDiagram, currentView} = this;
 
         const xLines: SnapLine[] = this.xLines = [];
         const yLines: SnapLine[] = this.yLines = [];
@@ -321,7 +323,7 @@ export class SnapManager {
             // This should actually never happen, because we call prepare first.
             const grid = this.grid = [];
 
-            return { xLines, yLines, grid: grid };
+            return {xLines, yLines, grid: grid};
         }
 
         // Compute the bounding boxes once.
@@ -329,43 +331,43 @@ export class SnapManager {
 
         const grid = this.grid = computeGrid(bounds);
 
-        xLines.push({ value: 0 });
-        xLines.push({ value: currentView.x });
+        xLines.push({value: 0});
+        xLines.push({value: currentView.x});
 
-        yLines.push({ value: 0 });
-        yLines.push({ value: currentView.y });
+        yLines.push({value: 0});
+        yLines.push({value: currentView.y});
 
         for (const aabb of bounds) {
-            xLines.push({ value: aabb.left, side: 'Left' });
-            xLines.push({ value: aabb.right, side: 'Right' });
-            xLines.push({ value: aabb.cx, isCenter: true });
+            xLines.push({value: aabb.left, side: 'Left'});
+            xLines.push({value: aabb.right, side: 'Right'});
+            xLines.push({value: aabb.cx, isCenter: true});
 
-            yLines.push({ value: aabb.top, side: 'Top' });
-            yLines.push({ value: aabb.bottom, side: 'Bottom' });
-            yLines.push({ value: aabb.cy, isCenter: true });
+            yLines.push({value: aabb.top, side: 'Top'});
+            yLines.push({value: aabb.bottom, side: 'Bottom'});
+            yLines.push({value: aabb.cy, isCenter: true});
         }
 
         for (const gridItem of grid) {
             const bound = gridItem.aabb;
-    
+
             if (gridItem.leftDistance != Number.MAX_VALUE) {
-                xLines.push({ 
-                    value: bound.right + gridItem.leftDistance, 
+                xLines.push({
+                    value: bound.right + gridItem.leftDistance,
                     gridSide: 'Right',
                     gridItem,
                 });
             }
 
             if (gridItem.rightDistance != Number.MAX_VALUE) {
-                xLines.push({ 
-                    value: bound.left - gridItem.rightDistance, 
+                xLines.push({
+                    value: bound.left - gridItem.rightDistance,
                     gridSide: 'Left',
                     gridItem,
                 });
             }
 
             if (gridItem.topDistance != Number.MAX_VALUE) {
-                yLines.push({ 
+                yLines.push({
                     value: bound.bottom + gridItem.topDistance,
                     gridSide: 'Bottom',
                     gridItem,
@@ -373,7 +375,7 @@ export class SnapManager {
             }
 
             if (gridItem.bottomDistance != Number.MAX_VALUE) {
-                yLines.push({ 
+                yLines.push({
                     value: bound.top - gridItem.bottomDistance,
                     gridSide: 'Top',
                     gridItem,
@@ -385,11 +387,11 @@ export class SnapManager {
         this.currentDiagram = undefined;
         this.currentView = undefined;
 
-        return { xLines, yLines, grid };
+        return {xLines, yLines, grid};
     }
 
     public getDebugLines(ignoreList: Record<string, any> = {}) {
-        const { xLines, yLines } = this.getSnapLines(ignoreList);
+        const {xLines, yLines} = this.getSnapLines(ignoreList);
 
         if (this.grid) {
             for (const line of xLines) {
@@ -400,7 +402,7 @@ export class SnapManager {
             }
         }
 
-        return { xLines, yLines };
+        return {xLines, yLines};
     }
 }
 
@@ -423,11 +425,11 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
             const distance = current.rightDistance;
 
             // Compute the vertical offset only once to save some compute time.
-            line.diff = { x: distance, y: 1 };
+            line.diff = {x: distance, y: 1};
 
             // Travel to the left while the right are the same.
             while (current) {
-                positions.push({ x: current.aabb.left - distance, y });
+                positions.push({x: current.aabb.left - distance, y});
 
                 if (!areSimilar(current.rightDistance, distance)) {
                     break;
@@ -442,11 +444,11 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
         case 'Right': {
             const distance = current.leftDistance;
 
-            line.diff = { x: distance, y: 1 };
+            line.diff = {x: distance, y: 1};
 
             // Travel to the left while the distances are the same.
             while (current) {
-                positions.push({ x: current.aabb.right, y });
+                positions.push({x: current.aabb.right, y});
 
                 if (!areSimilar(current.leftDistance, distance)) {
                     break;
@@ -462,11 +464,11 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
             const distance = current.bottomDistance;
 
             // Compute the vertical offset only once to save some compute time.
-            line.diff = { y: distance, x: 1 };
+            line.diff = {y: distance, x: 1};
 
             // Travel to the bottom while the distances are the same.
             while (current) {
-                positions.push({ y: current.aabb.top - distance, x });
+                positions.push({y: current.aabb.top - distance, x});
 
                 if (!areSimilar(current.bottomDistance, distance)) {
                     break;
@@ -481,11 +483,11 @@ function enrichLine(line: SnapLine | undefined, grid: GridItem[]) {
         case 'Bottom': {
             const distance = current.topDistance;
 
-            line.diff = { y: distance, x: 1 };
+            line.diff = {y: distance, x: 1};
 
             // Travel to the top while the distances are the same.
             while (current) {
-                positions.push({ y: current.aabb.bottom, x });
+                positions.push({y: current.aabb.bottom, x});
 
                 if (!areSimilar(current.topDistance, distance)) {
                     break;
@@ -564,7 +566,7 @@ function computeGrid(bounds: ReadonlyArray<Rect2>) {
                 }
             }
         }
-        
+
         grid.push(gridItem);
     }
 

@@ -5,25 +5,27 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import { MenuProps } from 'antd/lib';
-import { texts } from '@app/texts';
-import { buildMenuItem, useAlignment, useClipboard, useGrouping, useRemove } from '../actions';
+import {MenuProps} from 'antd/lib';
+import {texts} from '@app/texts';
+import {buildMenuItem, useAlignment, useClipboard, useGrouping, useRemove} from '../actions';
+import {useRelationship} from "@app/wireframes/components/actions/UseRelationship.ts";
 
 export const useContextMenu = (isOpen: boolean) => {
     const forAlignment = useAlignment();
     const forClipboard = useClipboard();
     const forGrouping = useGrouping();
     const forRemove = useRemove();
+    const forRelationship = useRelationship();
 
     if (!isOpen) {
         return DEFAULT_MENU;
     }
 
-    const items: MenuProps['items'] = [
+    let items: MenuProps['items'] = [
         buildMenuItem(forClipboard.cut, 'clipboardCut'),
         buildMenuItem(forClipboard.copy, 'clipboardCopy'),
         buildMenuItem(forClipboard.paste, 'clipboarPaste'),
-        { type: 'divider' },
+        {type: 'divider'},
         buildMenuItem(forRemove.remove, 'remove'),
         {
             label: texts.common.alignment,
@@ -56,7 +58,16 @@ export const useContextMenu = (isOpen: boolean) => {
         buildMenuItem(forGrouping.ungroup, 'ungroup'),
     ];
 
-    return { items, mode: 'vertical' } as MenuProps;
+    if (forRelationship.connect) {
+        items = [
+            ...items,
+            {type: 'divider'},
+            buildMenuItem(forRelationship.connect, 'connect'),
+            buildMenuItem(forRelationship.unConnect, 'unconnect'),
+        ]
+    }
+
+    return {items, mode: 'vertical'} as MenuProps;
 };
 
-const DEFAULT_MENU: MenuProps = { items: [], mode: 'vertical' };
+const DEFAULT_MENU: MenuProps = {items: [], mode: 'vertical'};

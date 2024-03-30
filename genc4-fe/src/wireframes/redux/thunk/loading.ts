@@ -182,7 +182,6 @@ export function rootLoading(undoableReducer: Reducer<UndoableState<EditorState>>
             state = UndoableState.create(initialState, initialAction);
         } else if (loadDiagramInternal.match(action)) {
             const stored = action.payload.stored;
-
             let initialState: EditorState;
 
             if (stored.initial) {

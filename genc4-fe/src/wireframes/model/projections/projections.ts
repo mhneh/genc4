@@ -5,18 +5,27 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import {  useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
-import { Color, ColorPalette, Types } from '@app/core/utils';
-import { texts } from '@app/texts';
-import { addDiagram, addShape, changeColor, changeColors, changeItemsAppearance, pasteItems, removeDiagram, removeItems } from '../actions';
-import { AssetsStateInStore } from '../state/assets-state.ts';
-import { Diagram } from '../diagram/diagram.ts';
-import { DiagramItemSet } from '../diagram/diagram-item-set.ts';
-import { EditorState, EditorStateInStore } from '../state/editor-state.ts';
-import { LoadingStateInStore } from '../state/loading-state.ts';
-import { UIStateInStore } from '../state/ui-state.ts';
-import { UndoableState } from '../state/undoable-state.ts';
+import {useSelector} from 'react-redux';
+import {createSelector} from 'reselect';
+import {Color, ColorPalette, Types} from '@app/core/utils';
+import {texts} from '@app/texts';
+import {
+    addDiagram,
+    addShape,
+    changeColor,
+    changeColors,
+    changeItemsAppearance,
+    pasteItems,
+    removeDiagram,
+    removeItems
+} from '../actions';
+import {AssetsStateInStore} from '../state/assets-state.ts';
+import {Diagram} from '../diagram/diagram.ts';
+import {DiagramItemSet} from '../diagram/diagram-item-set.ts';
+import {EditorState, EditorStateInStore} from '../state/editor-state.ts';
+import {LoadingStateInStore} from '../state/loading-state.ts';
+import {UIStateInStore} from '../state/ui-state.ts';
+import {UndoableState} from '../state/undoable-state.ts';
 
 const EMPTY_SELECTION_SET = DiagramItemSet.EMPTY;
 
@@ -39,6 +48,12 @@ export const getComponents = (state: AssetsStateInStore) => state.assets.compone
 export const getContextsFilter = (state: AssetsStateInStore) => state.assets.contextsFilter;
 export const getContainersFilter = (state: AssetsStateInStore) => state.assets.containersFilter;
 export const getComponentsFilter = (state: AssetsStateInStore) => state.assets.componentsFilter;
+
+export const getRelationships = createSelector(
+    getDiagrams,
+    getDiagramId,
+    (diagrams, id) => diagrams.get(id!)?.relationships
+)
 
 export const getIconsFilterRegex = createSelector(
     getIconsFilter,
@@ -216,6 +231,19 @@ export function getPageName(diagram: Diagram | string, index: number): string {
 
     return title || `${texts.common.page} ${index + 1}`;
 }
+
+export const getShouldConnectedItems = createSelector(
+    getSelection,
+    (items: DiagramItemSet) => {
+        if (items.selectedItems.length !== 2) {
+            return null;
+        }
+        return {
+            source: items.selectedItems[0],
+            target: items.selectedItems[1],
+        }
+    }
+)
 
 type State = AssetsStateInStore & EditorStateInStore & UIStateInStore & LoadingStateInStore;
 

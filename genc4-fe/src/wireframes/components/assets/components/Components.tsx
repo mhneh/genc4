@@ -15,6 +15,7 @@ import {Grid, useEventCallback} from "@app/core";
 import {Input} from "antd";
 import {texts} from "@app/texts";
 import {SearchOutlined} from "@ant-design/icons";
+import {useCallback} from "react";
 
 const keyBuilder = (shape: ShapeInfo) => {
     return shape.name;
@@ -26,7 +27,7 @@ export const Components = () => {
     const componentsFiltered = useStore(getFilteredComponents);
     const componentsFilter = useStore(getComponentsFilter);
 
-    const cellRenderer = React.useCallback((shape: ShapeInfo) => {
+    const cellRenderer = useCallback((shape: ShapeInfo) => {
         const doAdd = () => {
             const selectedDiagramId = getDiagramId(store.getState());
 

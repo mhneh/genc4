@@ -9,6 +9,7 @@ import { CommonTheme } from './_theme';
 import {ShapeSource} from "@app/wireframes/interface/shape/source/shape-source.ts";
 import {RenderContext} from "@app/wireframes/interface/renderer/render-context.ts";
 import {ShapePlugin} from "@app/wireframes/interface/shape/shape-plugin.ts";
+import {AssetType} from "@app/wireframes/interface/common/asset-type.ts";
 
 const DEFAULT_APPEARANCE = {
     [DefaultAppearance.FONT_SIZE]: CommonTheme.CONTROL_FONT_SIZE,
@@ -17,9 +18,11 @@ const DEFAULT_APPEARANCE = {
 };
 
 export class Label implements ShapePlugin {
-    type(): string {
-        return "";
+
+    type(): AssetType {
+        return "Shape";
     }
+
     public identifier(): string {
         return 'Label';
     }

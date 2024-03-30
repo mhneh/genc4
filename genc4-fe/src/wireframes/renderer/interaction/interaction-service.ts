@@ -66,7 +66,9 @@ export class InteractionService {
     private onBlur: Function = NOOP;
 
     constructor(
-        private readonly adornerLayers: svg.Element[], renderings: svg.Element, private readonly diagram: svg.Svg,
+        private readonly adornerLayers: svg.Element[],
+        renderings: svg.Element,
+        private readonly diagram: svg.Svg,
     ) {
         renderings.dblclick((event: MouseEvent) => {
             this.onDoubleClick(event);
