@@ -5,31 +5,48 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import { ActionReducerMapBuilder, createAction } from '@reduxjs/toolkit';
-import { Color, Types } from '@app/core/utils';
-import { EditorState, RendererService, Transform } from '../../model/internal.ts';
-import { createItemsAction, DiagramRef, ItemsRef } from '../../model/actions/utils.ts';
+import {ActionReducerMapBuilder, createAction} from '@reduxjs/toolkit';
+import {Color, Types} from '@app/core/utils';
+import {EditorState, RendererService, Transform} from '../../model/internal.ts';
+import {createItemsAction, DiagramRef, ItemsRef} from '../../model/actions/utils.ts';
 
 export const changeColors =
     createAction('items/color', (oldColor: Color, newColor: Color) => {
-        return { payload: { oldColor: oldColor.toString(), newColor: newColor.toString() } };
+        return {
+            payload: {
+                oldColor: oldColor.toString(),
+                newColor: newColor.toString()
+            }
+        };
     });
 
 export const changeItemsAppearance =
-    createAction('items/appearance', (diagram: DiagramRef, shapes: ItemsRef, key: string, value: any, force = false) => {
-        return { payload: createItemsAction(diagram, shapes, { appearance: { key, value }, force }) };
+    createAction('items/appearance',
+        (diagram: DiagramRef, shapes: ItemsRef, key: string, value: any, force = false) => {
+        return {
+            payload: createItemsAction(diagram, shapes, {
+                appearance: {key, value},
+                force
+            })
+        };
     });
 
 export const transformItems =
-    createAction('items/transform', (diagram: DiagramRef, items: ItemsRef, oldBounds: Transform, newBounds: Transform) => {
-        return { payload: createItemsAction(diagram, items, { oldBounds: oldBounds.toJS(), newBounds: newBounds.toJS() }) };
+    createAction('items/transform', (diagram: DiagramRef, items: ItemsRef,
+                                     oldBounds: Transform, newBounds: Transform) => {
+        return {
+            payload: createItemsAction(diagram, items, {
+                oldBounds: oldBounds.toJS(),
+                newBounds: newBounds.toJS()
+            })
+        };
     });
 
 export function buildAppearance(builder: ActionReducerMapBuilder<EditorState>) {
     return builder
         .addCase(changeColors, (state, action) => {
             const oldColor = Color.fromValue(action.payload.oldColor);
-    
+
             const newColorValue = Color.fromValue(action.payload.newColor);
             const newColorNumber = newColorValue.toNumber();
 
@@ -56,11 +73,9 @@ export function buildAppearance(builder: ActionReducerMapBuilder<EditorState>) {
             });
         })
         .addCase(changeItemsAppearance, (state, action) => {
-            const { diagramId, appearance, itemIds, force } = action.payload;
-
+            const {diagramId, appearance, itemIds, force} = action.payload;
             return state.updateDiagram(diagramId, diagram => {
-                const { key, value } = appearance;
-
+                const {key, value} = appearance;
                 return diagram.updateItems(itemIds, item => {
                     const rendererInstance = RendererService.get(item.renderer);
 
@@ -77,7 +92,7 @@ export function buildAppearance(builder: ActionReducerMapBuilder<EditorState>) {
             });
         })
         .addCase(transformItems, (state, action) => {
-            const { diagramId, itemIds } = action.payload;
+            const {diagramId, itemIds} = action.payload;
 
             return state.updateDiagram(diagramId, diagram => {
                 const boundsOld = Transform.fromJS(action.payload.oldBounds);

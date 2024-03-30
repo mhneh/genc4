@@ -46,7 +46,12 @@ export const CanvasView = (props: CanvasViewProps) => {
             return;
         }
 
-        const doc = svg.SVG().addTo(ref).css({ position: 'relative', overflow: 'visible' }).attr('tabindex', 0);
+        const doc = svg.SVG().addTo(ref)
+            .css({
+                position: 'relative',
+                overflow: 'visible'
+            })
+            .attr('tabindex', 0);
 
         setDocument(doc);
     }, []);

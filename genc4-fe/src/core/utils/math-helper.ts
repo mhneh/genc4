@@ -10,7 +10,6 @@ export module MathHelper {
 
     export function nextId() {
         CURRENT_ID++;
-
         return CURRENT_ID.toString();
     }
 

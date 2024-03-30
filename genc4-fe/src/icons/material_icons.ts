@@ -474,6 +474,7 @@ export const ICONS = [
     'line_weight e91a',
     'linear_scale e260',
     'link e157',
+    'link_off e16f',
     'linked_camera e438',
     'list e896',
     'live_help e0c6',

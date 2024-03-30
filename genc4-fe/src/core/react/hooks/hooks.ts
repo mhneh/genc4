@@ -8,7 +8,7 @@
 /* eslint-disable no-lonely-if */
 
 import * as React from 'react';
-import { useReactToPrint } from 'react-to-print';
+import {useReactToPrint} from 'react-to-print';
 
 export function useOpenFile(fileType: string, onOpened: (file: File) => void): () => void {
     const fileInputRef = React.useRef<HTMLInputElement | null>();
@@ -19,7 +19,7 @@ export function useOpenFile(fileType: string, onOpened: (file: File) => void): (
         invisibleInput.type = 'file';
         invisibleInput.style.visibility = 'hidden';
         invisibleInput.accept = fileType;
-    
+
         invisibleInput.addEventListener('change', () => {
             if (invisibleInput.files && invisibleInput.files.length > 0) {
                 const file = invisibleInput.files[0];
@@ -31,7 +31,7 @@ export function useOpenFile(fileType: string, onOpened: (file: File) => void): (
         document.body.appendChild(invisibleInput);
 
         fileInputRef.current = invisibleInput;
-        
+
         return () => {
             document.body.removeChild(invisibleInput);
 

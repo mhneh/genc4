@@ -6,10 +6,10 @@
 */
 
 import * as React from 'react';
-import { Keys, sizeInPx } from '@app/core';
-import { DefaultAppearance } from '@app/wireframes/interface';
-import { Diagram, DiagramItem, DiagramItemSet } from '@app/wireframes/model';
-import { InteractionHandler, InteractionService, SvgEvent } from '../../interaction/interaction-service.ts';
+import {Keys, sizeInPx} from '@app/core';
+import {DefaultAppearance} from '@app/wireframes/interface';
+import {Diagram, DiagramItem, DiagramItemSet} from '@app/wireframes/model';
+import {InteractionHandler, InteractionService, SvgEvent} from '../../interaction/interaction-service.ts';
 
 const MIN_WIDTH = 150;
 const MIN_HEIGHT = 30;
@@ -32,7 +32,10 @@ export interface TextAdornerProps {
 }
 
 export class TextAdorner extends React.PureComponent<TextAdornerProps> implements InteractionHandler {
-    private readonly style = { display: 'none ' };
+
+    private readonly style = {
+        display: 'none '
+    };
     private selectedShape: DiagramItem | null = null;
     private textareaElement: HTMLTextAreaElement = null!;
 
@@ -142,9 +145,9 @@ export class TextAdorner extends React.PureComponent<TextAdornerProps> implement
     public render() {
         return (
             <textarea className='ant-input no-border-radius' style={this.style}
-                ref={this.doInitialize}
-                onBlur={this.doHide}
-                onKeyDown={this.doSubmit} />
+                      ref={this.doInitialize}
+                      onBlur={this.doHide}
+                      onKeyDown={this.doSubmit}/>
         );
     }
 }

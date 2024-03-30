@@ -7,12 +7,12 @@
 
 import * as svg from '@svgdotjs/svg.js';
 import * as React from 'react';
-import { Rotation, Subscription, SVGHelper, Timer, Vec2 } from '@app/core';
-import { Diagram, DiagramItem, DiagramItemSet, SnapManager, SnapMode, Transform } from '@app/wireframes/model';
-import { OverlayManager } from '../../../contexts/OverlayContext.tsx';
-import { SVGRenderer2 } from '../../../shapes/utils/svg/svg-renderer2.ts';
-import { InteractionHandler, InteractionService, SvgEvent } from '../../interaction/interaction-service.ts';
-import { PreviewEvent } from '../../common/preview.ts';
+import {Rotation, Subscription, SVGHelper, Timer, Vec2} from '@app/core';
+import {Diagram, DiagramItem, DiagramItemSet, SnapManager, SnapMode, Transform} from '@app/wireframes/model';
+import {OverlayManager} from '../../../contexts/OverlayContext.tsx';
+import {SVGRenderer2} from '../../../shapes/utils/svg/svg-renderer2.ts';
+import {InteractionHandler, InteractionService, SvgEvent} from '../../interaction/interaction-service.ts';
+import {PreviewEvent} from '../../common/preview.ts';
 
 enum Mode { None, Resize, Move, Rotate }
 
@@ -57,19 +57,33 @@ export interface TransformAdornerProps {
 const DRAG_SIZE = 12;
 
 export class TransformAdorner extends React.PureComponent<TransformAdornerProps> implements InteractionHandler {
+
     private allElements: svg.Element[];
+
     private canResizeX = false;
+
     private canResizeY = false;
+
     private manipulated = false;
+
     private manipulationMode = Mode.None;
+
     private manipulationOffset = Vec2.ZERO;
+
     private moveShape: svg.Element = null!;
+
     private moveTimer?: Timer | null;
+
     private resizeShapes: svg.Element[] = [];
+
     private rotateShape: svg.Element = null!;
+
     private rotation = Rotation.ZERO;
+
     private startPosition = Vec2.ZERO;
+
     private startTransform = Transform.ZERO;
+
     private transform = Transform.ZERO;
 
     constructor(props: TransformAdornerProps) {
@@ -111,17 +125,15 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
 
     private calculateInitializeTransform() {
         let transform: Transform;
-
         if (this.props.selectionSet.selectedItems.length === 0) {
             transform = Transform.ZERO;
         } else if (this.props.selectionSet.selectedItems.length === 1) {
             transform = this.props.selectionSet.selectedItems[0].bounds(this.props.selectedDiagram);
         } else {
-            const bounds = this.props.selectionSet.selectedItems.map(x => x.bounds(this.props.selectedDiagram));
-
+            const bounds = this.props.selectionSet.selectedItems
+                .map(x => x.bounds(this.props.selectedDiagram));
             transform = Transform.createFromTransformationsAndRotation(bounds, this.rotation);
         }
-
         this.transform = transform;
     }
 
@@ -203,7 +215,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
 
             // We have kept the keyboard pressed and therefore also updated at least one shape.
             this.manipulated = true;
-    
+
             counter++;
         };
 
@@ -327,11 +339,12 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
         }
 
         // Use a stream of preview updates to bypass react for performance reasons.
-        this.props.previewStream.next({ type: 'Update', items });
+        this.props.previewStream.next({type: 'Update', items});
     }
 
     private move(delta: Vec2, snapMode: SnapMode, showOverlay = true) {
-        const snapResult = this.props.snapManager.snapMoving(this.startTransform, delta, snapMode, this.props.selectionSet.deepEditableItems);
+        const snapResult = this.props.snapManager
+            .snapMoving(this.startTransform, delta, snapMode, this.props.selectionSet.deepEditableItems);
 
         this.transform = this.startTransform.moveBy(snapResult.delta);
 
@@ -364,9 +377,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
         const eventPoint = event.position;
         const eventStart = this.startPosition;
 
-        const cummulativeRotation = Vec2.angleBetween(eventStart.sub(center), eventPoint.sub(center));
-
-        return cummulativeRotation;
+        return Vec2.angleBetween(eventStart.sub(center), eventPoint.sub(center));
     }
 
     private resize(delta: Vec2, snapMode: SnapMode, showOverlay = true) {
@@ -391,21 +402,21 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
     }
 
     private getResizeDeltaSize(angle: Rotation, cummulativeTranslation: Vec2, snapMode: SnapMode) {
-        const delta = Vec2.rotated(cummulativeTranslation.mul(2), Vec2.ZERO, angle.negate()).mul(this.manipulationOffset);
+        const delta = Vec2.rotated(
+            cummulativeTranslation.mul(2), Vec2.ZERO,
+            angle.negate())
+            .mul(this.manipulationOffset);
 
-        const snapResult =
-            this.props.snapManager.snapResizing(this.startTransform, delta, snapMode,
-                this.manipulationOffset.x,
-                this.manipulationOffset.y,
-                this.props.selectionSet);
-
-        return snapResult;
+        return this.props.snapManager.snapResizing(this.startTransform, delta, snapMode,
+            this.manipulationOffset.x,
+            this.manipulationOffset.y,
+            this.props.selectionSet);
     }
 
     private debug() {
         if (DEBUG_SIDES || DEBUG_DISTANCES) {
-            const { xLines, yLines } = this.props.snapManager.getDebugLines(this.startTransform);
-    
+            const {xLines, yLines} = this.props.snapManager.getDebugLines(this.startTransform);
+
             for (const line of xLines) {
                 if ((line.positions && DEBUG_DISTANCES) || DEBUG_SIDES) {
                     this.props.overlayManager.renderXLine(line);
@@ -473,7 +484,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
 
     private startManipulation(position: Vec2, transform: Transform) {
         // Use a stream of preview updates to bypass react for performance reasons.
-        this.props.previewStream.next({ type: 'Start' });
+        this.props.previewStream.next({type: 'Start'});
 
         this.moveTimer?.destroy();
         this.moveTimer = null;
@@ -487,7 +498,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
 
     private stopTransform() {
         // Use a stream of preview updates to bypass react for performance reasons.
-        this.props.previewStream.next({ type: 'End' });
+        this.props.previewStream.next({type: 'End'});
 
         this.moveTimer?.destroy();
         this.moveTimer = null;
@@ -501,7 +512,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
             return;
         }
 
-        const stroke = { width: 1 / this.props.zoom };
+        const stroke = {width: 1 / this.props.zoom};
 
         const size = this.transform.size;
 
@@ -571,7 +582,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
     private createMoveShape() {
         const moveShape =
             this.props.adorners.rect(1)
-                .stroke({ color: TRANSFORMER_STROKE_COLOR, width: 1 }).fill('none');
+                .stroke({color: TRANSFORMER_STROKE_COLOR, width: 1}).fill('none');
 
         this.props.interactionService.setCursor(moveShape, 'move');
 
@@ -581,7 +592,7 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
     private createRotateShape() {
         const rotateShape =
             this.props.adorners.ellipse(DRAG_SIZE, DRAG_SIZE)
-                .stroke({ color: TRANSFORMER_STROKE_COLOR, width: 1 }).fill(TRANSFORMER_FILL_COLOR);
+                .stroke({color: TRANSFORMER_STROKE_COLOR, width: 1}).fill(TRANSFORMER_FILL_COLOR);
 
         this.props.interactionService.setCursor(rotateShape, 'pointer');
 
@@ -589,14 +600,14 @@ export class TransformAdorner extends React.PureComponent<TransformAdornerProps>
     }
 
     private createResizeShapes() {
-        const ys = [-0.5, -0.5, -0.5,  0.0, 0.0,  0.5, 0.5, 0.5];
-        const xs = [-0.5,  0.0,  0.5, -0.5, 0.5, -0.5, 0.0, 0.5];
+        const ys = [-0.5, -0.5, -0.5, 0.0, 0.0, 0.5, 0.5, 0.5];
+        const xs = [-0.5, 0.0, 0.5, -0.5, 0.5, -0.5, 0.0, 0.5];
         const as = [315, 0, 45, 270, 90, 215, 180, 135];
 
         for (let i = 0; i < xs.length; i++) {
             const resizeShape =
                 this.props.adorners.rect(DRAG_SIZE, DRAG_SIZE)
-                    .stroke({ color: TRANSFORMER_STROKE_COLOR, width: 1 }).fill(TRANSFORMER_FILL_COLOR);
+                    .stroke({color: TRANSFORMER_STROKE_COLOR, width: 1}).fill(TRANSFORMER_FILL_COLOR);
 
             (resizeShape as any)['offset'] = new Vec2(xs[i], ys[i]);
 

@@ -23,7 +23,6 @@ import {
     Properties,
     Recent,
     SettingsMenu,
-    Shapes,
     UIMenu
 } from '@app/wireframes/components';
 import {

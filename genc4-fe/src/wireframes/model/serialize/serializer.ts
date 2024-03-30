@@ -80,7 +80,7 @@ export module Serializer {
         for (const item of set.nested.values()) {
             const serialized = writeDiagramItem(item);
 
-            if (item.type === 'Shape') {
+            if (item.type !== 'Group') {
                 output.visuals.push(serialized);
             } else {
                 output.groups.push(serialized);
@@ -146,7 +146,7 @@ function readDiagram(source: Record<string, any>) {
 function readDiagramItem(source: object, type?: any) {
     const raw: any = readObject(source, DIAGRAM_ITEM_SERIALIZERS);
 
-    if ((raw.type || type) === 'Shape') {
+    if ((raw.type || type) !== 'Group') {
         const defaults = RendererService.get(raw.renderer!)?.createDefaultShape();
 
         if (!defaults) {

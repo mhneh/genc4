@@ -8,7 +8,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import * as svg from '@svgdotjs/svg.js';
-import * as React from 'react';
+import {memo, useCallback, useEffect, useRef, useState} from 'react';
 import {Color, Rect2, Subscription, SVGHelper, Vec2} from '@app/core';
 import {Diagram, DiagramItem, DiagramItemSet, Transform} from '@app/wireframes/model';
 import {useOverlayContext} from '../../contexts/OverlayContext.tsx';
@@ -23,6 +23,7 @@ import {InteractionOverlays} from '../interaction/interaction-overlays.ts';
 import {InteractionService} from '../interaction/interaction-service.ts';
 import {PreviewEvent} from '../common/preview.ts';
 import './Editor.scss';
+import {RelationshipAdorner} from "@app/wireframes/renderer/adorner/relationship/RelationshipAdorner.tsx";
 
 export interface EditorProps {
     // The selected diagram.
@@ -59,16 +60,22 @@ export interface EditorProps {
     onSelectItems?: (diagram: Diagram, itemIds: ReadonlyArray<string>) => any;
 
     // A function to change the appearance of a visual.
-    onChangeItemsAppearance?: (diagram: Diagram, visuals: ReadonlyArray<DiagramItem>, key: string, val: any) => any;
+    onChangeItemsAppearance?: (diagram: Diagram,
+                               visuals: ReadonlyArray<DiagramItem>, key: string, val: any) => any;
+
+    onConnectItems?: (diagramId: string, source: string, target: string) => any;
 
     // A function that is invoked when the user clicked a link.
     onNavigate?: (item: DiagramItem, link: string) => void;
 
     // A function to transform a set of items.
-    onTransformItems?: (diagram: Diagram, items: ReadonlyArray<DiagramItem>, oldBounds: Transform, newBounds: Transform) => any;
+    onTransformItems?: (diagram: Diagram,
+                        items: ReadonlyArray<DiagramItem>,
+                        oldBounds: Transform,
+                        newBounds: Transform) => any;
 }
 
-export const Editor = React.memo((props: EditorProps) => {
+export const Editor = memo((props: EditorProps) => {
     const {
         color,
         diagram,
@@ -79,6 +86,7 @@ export const Editor = React.memo((props: EditorProps) => {
         onRender,
         onSelectItems,
         onTransformItems,
+        onConnectItems,
         selectionSet,
         viewBox,
         viewSize,
@@ -86,20 +94,36 @@ export const Editor = React.memo((props: EditorProps) => {
         zoomedSize,
     } = props;
 
-    const adornerSelectLayer = React.useRef<svg.Container>();
-    const adornerTransformLayer = React.useRef<svg.Container>();
-    const diagramTools = React.useRef<svg.Element>();
+    const adornerSelectLayer = useRef<svg.Container>();
+
+    const adornerTransformLayer = useRef<svg.Container>();
+
+    const adornerRelationshipLayer = useRef<svg.Container>();
+
+    const diagramTools = useRef<svg.Element>();
+
     const overlayContext = useOverlayContext();
-    const overlayLayer = React.useRef<svg.Container>();
-    const renderMainLayer = React.useRef<svg.Container>();
-    const renderMasterLayer = React.useRef<svg.Container>();
-    const [interactionMasterService, setInteractionMasterService] = React.useState<InteractionService>();
-    const [interactionMainService, setInteractionMainService] = React.useState<InteractionService>();
+
+    const overlayLayer = useRef<svg.Container>();
+
+    const renderMainLayer = useRef<svg.Container>();
+
+    const renderMasterLayer = useRef<svg.Container>();
+
+    const [
+        interactionMasterService,
+        setInteractionMasterService
+    ] = useState<InteractionService>();
+
+    const [
+        interactionMainService,
+        setInteractionMainService
+    ] = useState<InteractionService>();
 
     // Use a stream of preview updates to bypass react for performance reasons.
-    const renderPreview = React.useRef(new Subscription<PreviewEvent>());
+    const renderPreview = useRef(new Subscription<PreviewEvent>());
 
-    const doInit = React.useCallback((doc: svg.Svg) => {
+    const doInit = useCallback((doc: svg.Svg) => {
         // Create these layers in the correct order.
         diagramTools.current = doc.rect().fill('transparent');
         renderMasterLayer.current = doc.group().id('masterLayer');
@@ -111,21 +135,25 @@ export const Editor = React.memo((props: EditorProps) => {
         setInteractionMainService(
             new InteractionService(
                 [adornerSelectLayer.current, adornerTransformLayer.current],
-                renderMainLayer.current, doc
+                renderMainLayer.current,
+                doc
             )
         );
 
-        setInteractionMasterService(new InteractionService([
-                adornerSelectLayer.current,
-                adornerTransformLayer.current],
-            renderMasterLayer.current, doc));
+        setInteractionMasterService(
+            new InteractionService(
+                [adornerSelectLayer.current, adornerTransformLayer.current],
+                renderMasterLayer.current,
+                doc
+            )
+        );
 
         if (isDefaultView) {
             overlayContext.overlayManager = new InteractionOverlays(overlayLayer.current);
         }
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!interactionMainService) {
             return;
         }
@@ -141,11 +169,11 @@ export const Editor = React.memo((props: EditorProps) => {
         SVGHelper.setSize(renderMainLayer.current!, w, h);
     }, [viewSize, interactionMainService]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         overlayContext.snapManager.prepare(diagram, viewSize);
     }, [diagram, overlayContext.snapManager, viewSize]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         (overlayContext.overlayManager as any)['setZoom']?.(zoom);
     }, [diagram, overlayContext.overlayManager, zoom]);
 
@@ -221,6 +249,19 @@ export const Editor = React.memo((props: EditorProps) => {
                             zoom={zoom}
                         />
                     }
+
+                    {/*{onConnectItems &&*/}
+                    {/*    <RelationshipAdorner*/}
+                    {/*        adorners={adornerRelationshipLayer.current!}*/}
+                    {/*        interactionService={interactionMainService}*/}
+                    {/*        overlayManager={overlayContext.overlayManager}*/}
+                    {/*        previewStream={renderPreview.current}*/}
+                    {/*        selectedDiagram={diagram}*/}
+                    {/*        selectionSet={selectionSet}*/}
+                    {/*        snapManager={overlayContext.snapManager}*/}
+                    {/*        onConnectItems={onConnectItems}*/}
+                    {/*    />*/}
+                    {/*}*/}
 
                     {onNavigate &&
                         <NavigateAdorner interactionService={interactionMainService} onNavigate={onNavigate}/>

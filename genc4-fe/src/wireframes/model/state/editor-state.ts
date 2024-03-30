@@ -5,9 +5,9 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import { Color, ImmutableList, ImmutableMap, MathHelper, Record, Vec2 } from '@app/core/utils';
-import { Diagram } from '../diagram/diagram.ts';
-import { UndoableState } from './undoable-state.ts';
+import {Color, ImmutableList, ImmutableMap, MathHelper, Record, Vec2} from '@app/core/utils';
+import {Diagram} from '../diagram/diagram.ts';
+import {UndoableState} from './undoable-state.ts';
 
 type Diagrams = ImmutableMap<Diagram>;
 type DiagramIds = ImmutableList<string>;
@@ -47,6 +47,7 @@ export type InitialEditorProps = {
 };
 
 export class EditorState extends Record<Props> {
+
     public get id() {
         return this.get('id');
     }
@@ -76,7 +77,12 @@ export class EditorState extends Record<Props> {
     }
 
     public static create(setup: InitialEditorProps = {}): EditorState {
-        const { color, diagrams, diagramIds, size } = setup;
+        const {
+            color,
+            diagrams,
+            diagramIds,
+            size,
+        } = setup;
 
         const props: Props = {
             color: color || Color.WHITE,
@@ -99,7 +105,7 @@ export class EditorState extends Record<Props> {
                 result.push(item);
             }
         }
-        
+
         return result;
     }
 

@@ -23,6 +23,13 @@ interface ItemsAction extends DiagramAction {
     readonly itemIds: ReadonlyArray<string>;
 }
 
+interface RelationshipAction extends DiagramAction {
+    readonly title: string;
+    readonly description: string;
+    readonly source: string;
+    readonly target: string;
+}
+
 export function createItemsAction<T extends {}>(diagram: DiagramRef, items: ItemsRef, action?: T): T & AnyAction & ItemsAction {
     const result: any = createDiagramAction(diagram, action);
 
@@ -36,6 +43,11 @@ export function createItemsAction<T extends {}>(diagram: DiagramRef, items: Item
         }
     }
 
+    return result;
+}
+
+export function createRelationshipAction<T extends {}>(diagram: DiagramRef, action?: T): T & AnyAction & RelationshipAction {
+    const result: any = createDiagramAction(diagram, action);
     return result;
 }
 

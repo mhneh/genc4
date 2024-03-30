@@ -7,9 +7,9 @@
 
 import * as svg from '@svgdotjs/svg.js';
 import * as React from 'react';
-import { Rotation, SVGHelper, Vec2 } from '@app/core';
-import { DiagramItem, Transform } from '@app/wireframes/model';
-import { AbstractControl, DefaultConstraintFactory } from '../model/renderer/impl/abstract-control.ts';
+import {Rotation, SVGHelper, Vec2} from '@app/core';
+import {DiagramItem, Transform} from '@app/wireframes/model';
+import {AbstractControl, DefaultConstraintFactory} from '../model/renderer/impl/abstract-control.ts';
 import {ShapePlugin} from "@app/wireframes/interface/shape/shape-plugin.ts";
 
 interface ShapeRendererProps {
@@ -20,7 +20,7 @@ interface ShapeRendererProps {
 
     // The desired width.
     desiredWidth?: number;
-    
+
     // The desired height.
     desiredHeight?: number;
 
@@ -32,19 +32,19 @@ interface ShapeRendererProps {
 }
 
 export const ShapeRenderer = React.memo(React.forwardRef<HTMLDivElement, ShapeRendererProps>((props, ref) => {
-    const { 
+    const {
         appearance,
         desiredHeight,
         desiredWidth,
-        plugin, 
+        plugin,
         usePreviewOffset,
-        usePreviewSize, 
+        usePreviewSize,
     } = props;
 
     const [document, setDocument] = React.useState<svg.Svg>();
     const innerRef = React.useRef<SVGSVGElement>(null);
 
-    const viewBox = getViewBox(plugin, 
+    const viewBox = getViewBox(plugin,
         desiredWidth,
         desiredHeight,
         usePreviewSize,
@@ -55,7 +55,7 @@ export const ShapeRenderer = React.memo(React.forwardRef<HTMLDivElement, ShapeRe
             return;
         }
 
-        setDocument(svg.SVG(innerRef.current!).css({ overflow: 'visible' }));
+        setDocument(svg.SVG(innerRef.current!).css({overflow: 'visible'}));
     }, []);
 
     React.useEffect(() => {
@@ -73,14 +73,14 @@ export const ShapeRenderer = React.memo(React.forwardRef<HTMLDivElement, ShapeRe
 
         if (desiredWidth && desiredHeight) {
             let aspectRatio = viewBox.outerSize.x / viewBox.outerSize.y;
-        
+
             if (aspectRatio > desiredWidth / desiredHeight) {
                 document.width(desiredWidth);
             } else {
                 document.height(desiredHeight);
             }
         } else {
-            document.width(viewBox.outerSize.x).height(viewBox.outerSize.y); 
+            document.width(viewBox.outerSize.x).height(viewBox.outerSize.y);
         }
     }, [desiredHeight, desiredWidth, document, viewBox]);
 
@@ -102,12 +102,12 @@ export const ShapeRenderer = React.memo(React.forwardRef<HTMLDivElement, ShapeRe
                 transform: new Transform(
                     new Vec2(
                         viewBox.size.x * 0.5,
-                        viewBox.size.y * 0.5), 
+                        viewBox.size.y * 0.5),
                     new Vec2(
                         viewBox.size.x,
                         viewBox.size.y),
                     Rotation.ZERO),
-                appearance: { ...plugin.defaultAppearance(), ...appearance || {} },
+                appearance: {...plugin.defaultAppearance(), ...appearance || {}},
                 configurables: [],
                 constraint: plugin?.constraint?.(DefaultConstraintFactory.INSTANCE),
                 type: plugin.type(),
@@ -123,8 +123,8 @@ export const ShapeRenderer = React.memo(React.forwardRef<HTMLDivElement, ShapeRe
     }, [appearance, document, plugin, viewBox]);
 
     return (
-        <div ref={ref} style={{ lineHeight: 0 }}>
-            <svg ref={innerRef} />
+        <div ref={ref} style={{lineHeight: 0}}>
+            <svg ref={innerRef}/>
         </div>
     );
 }));
@@ -133,16 +133,16 @@ export function getViewBox(
     plugin: ShapePlugin,
     desiredWidth?: number,
     desiredHeight?: number,
-    usePreviewSize?: boolean, 
+    usePreviewSize?: boolean,
     usePreviewOffset?: boolean) {
     let x = 0;
     let y = 0;
 
     const size = usePreviewSize ?
-        plugin.previewSize?.(desiredWidth || 0, desiredHeight || 0) || plugin.defaultSize() : 
+        plugin.previewSize?.(desiredWidth || 0, desiredHeight || 0) || plugin.defaultSize() :
         plugin.defaultSize();
 
-    let outerSize = { x: size.x, y: size.y };
+    let outerSize = {x: size.x, y: size.y};
 
     if (usePreviewOffset) {
         const offset = plugin.previewOffset?.();
@@ -159,5 +159,5 @@ export function getViewBox(
         }
     }
 
-    return { x, y, size, outerSize };
+    return {x, y, size, outerSize};
 }

@@ -6,11 +6,13 @@
 */
 
 import * as svg from '@svgdotjs/svg.js';
-import * as React from 'react';
+import {memo, useEffect, useMemo, useRef} from 'react';
 import {ImmutableList, Subscription} from '@app/core';
 import {Diagram, DiagramItem, RendererService} from '@app/wireframes/model';
 import {PreviewEvent} from '../common/preview.ts';
-import {ShapeRef} from './shape-ref.ts';
+import {ShapeRef} from './ref/ShapeRef.ts';
+import {RelationshipRef} from "@app/wireframes/renderer/render/ref/RelationshipRef.ts";
+import {Relationship} from "@app/wireframes/model/relationship/relationship.ts";
 
 export interface RenderLayerProps {
     // The selected diagram.
@@ -28,7 +30,7 @@ export interface RenderLayerProps {
 
 const showDebugOutlines = false;
 
-export const RenderLayer = React.memo((props: RenderLayerProps) => {
+export const RenderLayer = memo((props: RenderLayerProps) => {
     const {
         diagram,
         diagramLayer,
@@ -36,20 +38,19 @@ export const RenderLayer = React.memo((props: RenderLayerProps) => {
         onRender,
     } = props;
 
-    const shapesRendered = React.useRef(onRender);
-    const shapeRefsById = React.useRef<{ [id: string]: ShapeRef }>({});
+    const shapesRendered = useRef(onRender);
+    const shapeRefsById = useRef<{ [id: string]: ShapeRef }>({});
+    const relationshipRefsById = useRef<{ [id: string]: RelationshipRef }>({});
 
     const itemIds = diagram?.rootIds;
     const items = diagram?.items;
+    const relationships = diagram?.relationships;
 
-    const orderedShapes = React.useMemo(() => {
+    const orderedShapes = useMemo(() => {
         const flattenShapes: DiagramItem[] = [];
 
         if (items && itemIds) {
-            let handleContainer: (itemIds: ImmutableList<string>) => any;
-
-            // eslint-disable-next-line prefer-const
-            handleContainer = itemIds => {
+            const handleContainer: (itemIds: ImmutableList<string>) => any = itemIds => {
                 for (const id of itemIds.values) {
                     const item = items.get(id);
 
@@ -65,14 +66,23 @@ export const RenderLayer = React.memo((props: RenderLayerProps) => {
                     }
                 }
             };
-
             handleContainer(itemIds);
         }
 
         return flattenShapes;
     }, [itemIds, items]);
 
-    React.useEffect(() => {
+    const orderedRelationships = useMemo(() => {
+        const flattenShapes: Relationship[] = [];
+        if (relationships) {
+            for (const relationship of relationships.values) {
+                flattenShapes.push(relationship);
+            }
+        }
+        return flattenShapes;
+    }, [relationships]);
+
+    useEffect(() => {
         const allShapesById: { [id: string]: boolean } = {};
         const allShapes = orderedShapes;
 
@@ -129,7 +139,23 @@ export const RenderLayer = React.memo((props: RenderLayerProps) => {
         }
     }, [diagramLayer, orderedShapes]);
 
-    React.useEffect(() => {
+    useEffect(() => {
+        const references = relationshipRefsById.current;
+        for (const relationship of orderedRelationships) {
+            if (!references[relationship.id]) {
+                const relationshipRenderer = RendererService.get('Relationship');
+                if (!relationshipRenderer) {
+                    throw new Error(`Cannot find renderer for relationship.`);
+                }
+                references[relationship.id] = new RelationshipRef(diagramLayer, relationshipRenderer, showDebugOutlines);
+            }
+        }
+        for (const shape of orderedRelationships) {
+            references[shape.id].render(shape);
+        }
+    }, [diagramLayer, orderedRelationships]);
+
+    useEffect(() => {
         return preview?.subscribe(event => {
             if (event.type === 'Update') {
                 for (const item of Object.values(event.items)) {

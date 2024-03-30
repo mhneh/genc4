@@ -5,9 +5,10 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-import { ImmutableList, ImmutableMap, ImmutableSet, MathHelper, Record, Types } from '@app/core/utils';
-import { DiagramItem } from './diagram-item.ts';
-import { DiagramItemSet } from './diagram-item-set.ts';
+import {ImmutableList, ImmutableMap, ImmutableSet, MathHelper, Record, Types} from '@app/core/utils';
+import {DiagramItem} from './diagram-item.ts';
+import {DiagramItemSet} from './diagram-item-set.ts';
+import {Relationship} from "@app/wireframes/model/relationship/relationship.ts";
 
 type Items = ImmutableMap<DiagramItem>;
 type ItemIds = ImmutableList<string>;
@@ -41,6 +42,10 @@ type Props = {
 
     // Set the master diagram.
     master?: string;
+
+    relationships: ImmutableMap<Relationship>;
+
+    selectedRelationshipId?: string | null;
 };
 
 export type InitialDiagramProps = {
@@ -58,6 +63,10 @@ export type InitialDiagramProps = {
 
     // Set the master diagram.
     master?: string;
+
+    relationships?: { [id: string]: Relationship } | ImmutableMap<Relationship>;
+
+    selectedRelationshipId?: string | null;
 };
 
 export class Diagram extends Record<Props> {
@@ -88,12 +97,27 @@ export class Diagram extends Record<Props> {
         return this.get('master');
     }
 
+    public get relationships() {
+        return this.get('relationships');
+    }
+
+    public get selectedRelationshipId() {
+        return this.get('selectedRelationshipId');
+    }
+
     public get rootItems(): ReadonlyArray<DiagramItem> {
         return this.cachedRootItems ||= this.findItems(this.rootIds.values);
     }
 
     public static create(setup: InitialDiagramProps = {}) {
-        const { id, items, rootIds, master, title } = setup;
+        const {
+            id,
+            items,
+            rootIds,
+            master,
+            title,
+            relationships
+        } = setup;
 
         const props: Props = {
             id: id || MathHelper.nextId(),
@@ -102,6 +126,7 @@ export class Diagram extends Record<Props> {
             rootIds: ImmutableList.of(rootIds),
             selectedIds: ImmutableSet.empty(),
             title,
+            relationships: ImmutableMap.of(relationships)
         };
 
         return new Diagram(props);
@@ -121,7 +146,7 @@ export class Diagram extends Record<Props> {
                 result.push(item);
             }
         }
-        
+
         return result;
     }
 
@@ -191,7 +216,7 @@ export class Diagram extends Record<Props> {
         });
     }
 
-    public selectItems(ids: ReadonlyArray<string>) {    
+    public selectItems(ids: ReadonlyArray<string>) {
         return this.arrange(ids, update => {
             update.selectedIds = ImmutableSet.of(...ids);
         });
@@ -230,7 +255,7 @@ export class Diagram extends Record<Props> {
     public group(groupId: string, ids: ReadonlyArray<string>) {
         return this.arrange(ids, update => {
             update.itemIds = update.itemIds.add(groupId).remove(...ids);
-            update.items = update.items.set(groupId, DiagramItem.createGroup({ id: groupId, childIds: ids }));
+            update.items = update.items.set(groupId, DiagramItem.createGroup({id: groupId, childIds: ids}));
         }, 'SameParent');
     }
 
@@ -280,7 +305,7 @@ export class Diagram extends Record<Props> {
             update.itemIds = update.itemIds.remove(...set.rootIds);
         });
     }
-    
+
     private arrange(targetIds: Iterable<string>, updater: (diagram: UpdateProps) => void, condition?: 'NoCondition' | 'SameParent'): Diagram {
         if (!targetIds) {
             return this;
@@ -312,7 +337,7 @@ export class Diagram extends Record<Props> {
             const update = {
                 items: this.items,
                 itemIds: resultParent.childIds,
-                selectedIds: this.selectedIds, 
+                selectedIds: this.selectedIds,
             };
 
             updater(update);
@@ -321,18 +346,75 @@ export class Diagram extends Record<Props> {
                 update.items = update.items.update(resultParent.id, p => p.set('childIds', update.itemIds));
             }
 
-            return this.merge({ items: update.items, selectedIds: update.selectedIds });
+            return this.merge({items: update.items, selectedIds: update.selectedIds});
         } else {
             const update = {
                 items: this.items,
                 itemIds: this.rootIds,
-                selectedIds: this.selectedIds, 
+                selectedIds: this.selectedIds,
             };
 
             updater(update);
 
-            return this.merge({ items: update.items, selectedIds: update.selectedIds, rootIds: update.itemIds });
+            return this.merge({items: update.items, selectedIds: update.selectedIds, rootIds: update.itemIds});
         }
+    }
+
+    public addRelationship(relationship: Relationship) {
+        const present = this.relationships.values
+            .some(r => r.source == relationship.source
+                && r.target == relationship.target);
+        if (present) {
+            return this;
+        }
+        return this.merge({
+            relationships: this.relationships.set(relationship.id, relationship)
+        })
+    }
+
+    public findRelationship(source: string, target: string) {
+        const relationships = this.relationships.values
+            .filter(r => (r.source == source && r.target == target)
+            || (r.source == target && r.target == source));
+        if (relationships.length != 1) {
+            return null;
+        }
+        return relationships.at(0);
+    }
+
+    public updateRelationship(relationshipId: string, updater: (relationship: Relationship) => Relationship) {
+        this.set('relationships', this.relationships.update(relationshipId, updater));
+    }
+
+    public removeRelationship(relationshipId: string) {
+        return this.merge({
+            relationships: this.relationships.remove(relationshipId),
+            selectedRelationshipId: this.selectedRelationshipId ? null : this.selectedRelationshipId,
+        })
+    }
+
+    public removeRelationshipBySourceTarget(source: string, target: string) {
+        const relationship = this.relationships.values
+            .filter(r => {
+                return r.target == target
+                    && r.source == source;
+            })
+            .at(0);
+        if (!relationship) {
+            return this;
+        }
+        return this.merge({
+            relationships: this.relationships.remove(relationship.id),
+            selectedRelationshipId: this.selectedRelationshipId ? null : this.selectedRelationshipId,
+        })
+    }
+
+    public selectRelationship(relationshipId: string | null | undefined) {
+        if (!this.relationships.get(relationshipId!)) {
+            return this;
+        }
+
+        return this.set('selectedRelationshipId', relationshipId);
     }
 }
 

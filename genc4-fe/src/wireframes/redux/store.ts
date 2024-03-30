@@ -30,6 +30,7 @@ import {
 import {EditorState} from '../model/state/editor-state.ts';
 import {createInitialAssetsState, createInitialLoadingState, createInitialUIState} from '../model/internal.ts';
 import {registerComponents, registerShapeRenderers} from '../shapes';
+import {buildRelationships} from "@app/wireframes/redux/reducers/relationships.ts";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -48,6 +49,7 @@ const editorReducer = createClassReducer(editorState, builder => {
     buildGrouping(builder);
     buildItems(builder);
     buildOrdering(builder);
+    buildRelationships(builder);
 });
 
 // Undoable

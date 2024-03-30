@@ -6,6 +6,7 @@
 */
 
 import { DiagramItem } from '@app/wireframes/model';
+import {Relationship} from "@app/wireframes/model/relationship/relationship.ts";
 
 export type PreviewStart = {
     type: 'Start';
@@ -20,6 +21,8 @@ export type PreviewUpdate = {
 
     // All the items.
     items: { [id: string]: DiagramItem };
+
+    relationships?: {[id: string]: Relationship};
 };
 
 export type PreviewEvent = PreviewStart | PreviewEnd | PreviewUpdate;

@@ -5,8 +5,8 @@
  * Copyright (c) Sebastian Stehle. All rights reserved.
 */
 
-export * from './color/ColorList.tsx';
-export * from './color/ColorPicker.tsx';
+export * from './color/list/ColorList.tsx';
+export * from './color/picker/ColorPicker.tsx';
 export * from './clipboard/Clipboard.tsx';
 export * from './grid/Grid.tsx';
 export * from './hooks/hooks.ts';
