@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run app" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="genc4" />
+    <working_directory value="$PROJECT_DIR$/genc4-be" />
+    <kind value="FILE" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/genc4-be/main.go" />
+    <method v="2" />
+  </configuration>
+</component>
