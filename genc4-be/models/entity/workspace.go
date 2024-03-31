@@ -6,24 +6,24 @@ import (
 )
 
 type Workspace struct {
-	ID            primitive.ObjectID `json:"id" bson:"_id"`
-	Name          string             `json:"name" bson:"name"`
-	System        string             `json:"system" bson:"system"`
-	Diagrams      []Diagram          `json:"diagrams" bson:"diagrams"`
-	DiagramIds    []string           `json:"diagramIds" bson:"diagramIds"`
-	Actions       []Action           `json:"actions" bson:"actions"`
-	Size          Size               `json:"size" bson:"size"`
-	Relationships []Relationship     `json:"relationships" bson:"relationships"`
-	Views         []View             `json:"views" bson:"views"`
-	CreatedDate   time.Time          `json:"createdDate" bson:"createdDate"`
+	ID          primitive.ObjectID `json:"id" bson:"_id"`
+	Name        string             `json:"name" bson:"name"`
+	System      string             `json:"system" bson:"system"`
+	Diagrams    []Diagram          `json:"diagrams" bson:"diagrams"`
+	DiagramIds  []string           `json:"diagramIds" bson:"diagramIds"`
+	Actions     []Action           `json:"actions" bson:"actions"`
+	Size        Size               `json:"size" bson:"size"`
+	Views       []View             `json:"views" bson:"views"`
+	CreatedDate time.Time          `json:"createdDate" bson:"createdDate"`
 }
 
 type Diagram struct {
-	Id      string        `json:"id" bson:"id"`
-	Name    string        `json:"name" bson:"name"`
-	Type    string        `json:"type" bson:"type"`
-	Items   []DiagramItem `json:"items" bson:"items"`
-	RootIds []string      `json:"rootIds" bson:"rootIds"`
+	Id            string         `json:"id" bson:"id"`
+	Name          string         `json:"name" bson:"name"`
+	Type          string         `json:"type" bson:"type"`
+	Items         []DiagramItem  `json:"items" bson:"items"`
+	RootIds       []string       `json:"rootIds" bson:"rootIds"`
+	Relationships []Relationship `json:"relationships" bson:"relationships"`
 }
 
 type DiagramItem struct {
@@ -63,10 +63,12 @@ type Size struct {
 }
 
 type Relationship struct {
-	Source string `json:"source" bson:"source"`
-	Target string `json:"target" bson:"target"`
-	Id     string `json:"id" bson:"id"`
-	Title  string `json:"title" bson:"title"`
+	Source      string `json:"source" bson:"source"`
+	Target      string `json:"target" bson:"target"`
+	Id          string `json:"id" bson:"id"`
+	Title       string `json:"title" bson:"title"`
+	Description string `json:"description" bson:"description"`
+	DiagramId   string `json:"diagramId" bson:"diagramId"`
 }
 
 type View struct {

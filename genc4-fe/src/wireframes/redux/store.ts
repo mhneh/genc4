@@ -55,7 +55,8 @@ const editorReducer = createClassReducer(editorState, builder => {
 // Undoable
 const undoableReducer = undoable(
     editorReducer,
-    editorState, {
+    editorState,
+    {
         actionMerger: mergeAction,
         actionsToIgnore: [
             selectDiagram.name,

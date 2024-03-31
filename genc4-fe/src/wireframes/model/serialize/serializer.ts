@@ -221,6 +221,10 @@ const DIAGRAM_SERIALIZERS: PropertySerializers = {
         get: (source) => source,
         set: (source) => source,
     },
+    'type': {
+        get: (source) => source,
+        set: (source) => source,
+    }
 };
 
 const DIAGRAM_ITEM_SERIALIZERS: PropertySerializers = {

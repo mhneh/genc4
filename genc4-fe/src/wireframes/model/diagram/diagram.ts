@@ -46,6 +46,8 @@ type Props = {
     relationships: ImmutableMap<Relationship>;
 
     selectedRelationshipId?: string | null;
+
+    type?: string;
 };
 
 export type InitialDiagramProps = {
@@ -67,6 +69,8 @@ export type InitialDiagramProps = {
     relationships?: { [id: string]: Relationship } | ImmutableMap<Relationship>;
 
     selectedRelationshipId?: string | null;
+
+    type?: string;
 };
 
 export class Diagram extends Record<Props> {
@@ -105,6 +109,10 @@ export class Diagram extends Record<Props> {
         return this.get('selectedRelationshipId');
     }
 
+    public get type() {
+        return this.get('type');
+    }
+
     public get rootItems(): ReadonlyArray<DiagramItem> {
         return this.cachedRootItems ||= this.findItems(this.rootIds.values);
     }
@@ -116,7 +124,8 @@ export class Diagram extends Record<Props> {
             rootIds,
             master,
             title,
-            relationships
+            relationships,
+            type,
         } = setup;
 
         const props: Props = {
@@ -126,7 +135,8 @@ export class Diagram extends Record<Props> {
             rootIds: ImmutableList.of(rootIds),
             selectedIds: ImmutableSet.empty(),
             title,
-            relationships: ImmutableMap.of(relationships)
+            relationships: ImmutableMap.of(relationships),
+            type,
         };
 
         return new Diagram(props);
